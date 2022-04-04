@@ -1,0 +1,5 @@
+.broadcastItem {
+  border: solid 5px yellow;
+  min-height: 480px;
+  max-width: 640px;
+}
