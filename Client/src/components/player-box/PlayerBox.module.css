@@ -7,7 +7,7 @@
   display: grid;
   grid-template-rows: 1fr 1fr;
 }
-.playerboxTitle div {
+.stream {
   display: grid;
   grid-template-columns: 20px 1fr;
 }

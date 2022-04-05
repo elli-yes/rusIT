@@ -4,7 +4,6 @@ import { useSelector } from "react-redux"
 
 export const Broadcasts = () => {
   const streams = useSelector((state) => state.streamers.streamers)
-  console.log(streams)
   return (
     <div className={css.container}>
       {streams.map((stream) => {

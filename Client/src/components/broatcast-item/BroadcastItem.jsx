@@ -2,16 +2,20 @@ import VideoJS from "../player/Video.jsx"
 import css from "./BroadcastItem.module.css"
 import React from "react"
 import { useParams } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 export const BroadcastItem = () => {
+  const streams = useSelector((state) => state.streamers.streamers)
   const { login } = useParams()
-  console.log(login)
+
+  const data = streams.filter((stream) => stream.login === login)
+
+  console.log()
   const playerRef = React.useRef(null)
 
   const handlePlayerReady = (player) => {
     playerRef.current = player
 
-    // you can handle player events here
     player.on("waiting", () => {
       console.log("player is waiting")
     })
@@ -21,8 +25,7 @@ export const BroadcastItem = () => {
     })
   }
   const videoJsOptions = {
-    // lookup the options in the docs for more options
-    autoplay: true,
+    autoplay: false,
     controls: true,
     responsive: true,
     fluid: true,
@@ -37,6 +40,14 @@ export const BroadcastItem = () => {
   return (
     <div className={css.broadcastItem}>
       <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+      <div className={css.info}>
+        <span>
+          <div className={data[0].status ? css.online : css.offline}></div>
+          <div className={css.login}>{data[0].login}</div>
+        </span>
+        <div className={css.title}>{data[0].title}</div>
+      </div>
+      <div className={css.about}></div>
     </div>
   )
 }

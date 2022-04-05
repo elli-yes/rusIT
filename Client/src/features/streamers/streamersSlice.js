@@ -5,6 +5,7 @@ const initialState = {
     { status: 1, title: "Doka2super", login: "Maddyson" },
     { status: 0, title: "CSGOsuper", login: "NAVI" },
     { status: 1, title: "TANKIsuper", login: "ZapZAp" },
+    { status: 0, title: "Pool and bikini", login: "Boobs1999" },
   ],
 }
 

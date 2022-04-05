@@ -8,7 +8,7 @@ export const PlayerBox = ({ login, title, status, ...props }) => {
       <div className={css.playerboxTitle}>
         <div>{title}</div>
 
-        <div>
+        <div className={css.stream}>
           <div className={status ? css.statusOn : css.statusOff}></div>
           <div>{login}</div>
         </div>
