@@ -1,0 +1,16 @@
+.button {
+  width: 90px;
+  height: 44px;
+  background-color: lightskyblue;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px gray;
+}
+.info {
+  background-color: white;
+}
+.confirm {
+  background-color: darkmagenta;
+}

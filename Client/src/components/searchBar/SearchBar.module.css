@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.searchField {
+  width: 50%;
+  height: 32px;
+  padding: 2px 5px;
+  font-size: 18px;
+  background-color: lightcyan;
+  border: none;
+}
+.searchField:focus-visible {
+  outline: 1px solid gray;
+}
+.ico {
+  content: "";
+  height: 15px;
+  width: 15px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  border: 4px solid black;
+}
+.ico::before {
+  content: "";
+  display: block;
+  position: relative;
+  top: 5px;
+  left: 8px;
+  height: 10px;
+  width: 4px;
+  transform: rotate(-45deg);
+  background-color: black;
+}

@@ -1,0 +1,15 @@
+.header {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: 150px 1fr 100px;
+  background-color: white;
+  border-bottom: gray 1px solid;
+  margin-bottom: 10px;
+  min-height: 50px;
+  padding: 0px 10px;
+}
+.logo {
+  padding: 5px;
+  height: 40px;
+}

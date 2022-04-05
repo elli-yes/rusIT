@@ -1,13 +1,22 @@
 import css from "./Broadcasts.module.css"
 import { PlayerBox } from "../player-box/PlayerBox"
-import { NavLink } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 export const Broadcasts = () => {
+  const streams = useSelector((state) => state.streamers.streamers)
+  console.log(streams)
   return (
     <div className={css.container}>
-      <NavLink to="/test">
-        <PlayerBox />
-      </NavLink>
+      {streams.map((stream) => {
+        return (
+          <PlayerBox
+            key={stream.login}
+            login={stream.login}
+            title={stream.title}
+            status={stream.status}
+          />
+        )
+      })}
     </div>
   )
 }

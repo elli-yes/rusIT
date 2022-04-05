@@ -1,14 +1,15 @@
 import "./App.css"
 import { useState } from "react"
 import { MainRouter } from "./components/router/MainRouter"
-
+import { Counter } from "./features/streamers/Streamers"
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <MainRouter/>
+      <MainRouter />
+      {/* <Counter></Counter> */}
     </div>
   )
 }

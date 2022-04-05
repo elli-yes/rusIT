@@ -1,5 +1,32 @@
-.playerbox{
-    border: 3px solid yellow;
-    margin-bottom: 50px;
-    min-height: 200px;
+.playerbox {
+  border: 3px solid yellow;
+  min-height: 200px;
+  margin-bottom: 5px;
+}
+.playerboxTitle {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+.playerboxTitle div {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+}
+.statusOn {
+  justify-self: center;
+  align-self: center;
+  content: "";
+  height: 10px;
+  width: 10px;
+  background-color: red;
+  border-radius: 5px;
+}
+.statusOff {
+  justify-self: center;
+  align-self: center;
+  content: "";
+  height: 10px;
+  width: 10px;
+  background-color: gray;
+
+  border-radius: 5px;
 }
