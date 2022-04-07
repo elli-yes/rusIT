@@ -1,9 +1,9 @@
 import css from "./Button.module.css"
 
-export const Button = (props) => {
+export const Button = ({ children, variant, onClick }) => {
   return (
-    <button className={`${css[props.variant]} ${css.button}`}>
-      {props.children}
+    <button onClick={onClick} className={`${css[variant]} ${css.button}`}>
+      {children}
     </button>
   )
 }

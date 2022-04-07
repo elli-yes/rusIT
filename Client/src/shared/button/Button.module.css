@@ -17,6 +17,9 @@
 .confirm {
   background-color: darkmagenta;
 }
+.exit {
+  background-color: tomato;
+}
 .button:hover {
   transition: 300ms;
   background-color: lightgray;

@@ -1,8 +1,9 @@
 import css from "./Settings.module.css"
 import { Button } from "../shared/button/Button"
 
-export const Settings = (props) => {
-  switch (props.version) {
+export const Settings = ({ variant }) => {
+  const variants = [{}]
+  switch (variant) {
     case "token":
       return (
         <div className={css.container}>

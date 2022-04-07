@@ -1,0 +1,27 @@
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 5px;
+}
+h2 {
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+.containerLog {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 10px;
+}
+.container {
+  padding: 10px;
+}
+.form {
+  margin-top: 10px;
+  display: grid;
+  max-width: 40%;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+}
+.form * {
+  margin: 5px 0px;
+}
