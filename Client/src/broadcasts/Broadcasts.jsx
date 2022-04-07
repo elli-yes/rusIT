@@ -8,12 +8,7 @@ import { Header } from "../shared/header/Header.jsx"
 export const Broadcasts = () => {
   const streams = useSelector((state) => state.streamers.streamers)
   const [selectedSort, setSort] = useState("status")
-  // const [stream, setStream] = useState([])
   const [searchQuerry, setSearchQuerry] = useState("")
-
-  // useEffect(() => {
-  //   setStream(streams)
-  // }, [])
 
   const sortedStreams = useMemo(() => {
     console.log("HF<JNF")
@@ -31,8 +26,8 @@ export const Broadcasts = () => {
   const sortedAndSearched = useMemo(() => {
     return sortedStreams.filter(
       (stream) =>
-        stream.title.toLowerCase().includes(searchQuerry) ||
-        stream.login.toLowerCase().includes(searchQuerry)
+        stream.title.toLowerCase().includes(searchQuerry.toLowerCase()) ||
+        stream.login.toLowerCase().includes(searchQuerry.toLowerCase())
     )
   }, [searchQuerry, sortedStreams])
   const sortStreams = (sort) => {
