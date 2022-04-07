@@ -1,0 +1,30 @@
+.broadcastItem {
+  border: solid 5px lightblue;
+  max-width: 40%;
+}
+.about {
+}
+.info {
+  padding: 7px;
+  font-size: 18px;
+}
+.info span {
+  display: flex;
+  align-items: center;
+}
+.online {
+  content: "";
+  height: 20px;
+  width: 20px;
+  background-color: red;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.offline {
+  content: "";
+  height: 20px;
+  width: 20px;
+  background-color: gray;
+  border-radius: 10px;
+  margin-right: 10px;
+}

@@ -1,6 +1,6 @@
 import "./App.css"
 import { useState } from "react"
-import { MainRouter } from "./components/router/MainRouter"
+import { MainRouter } from "./router/MainRouter"
 import { Counter } from "./features/streamers/Streamers"
 
 function App() {

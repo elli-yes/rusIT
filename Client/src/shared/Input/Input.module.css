@@ -1,0 +1,12 @@
+.input {
+  width: 50%;
+  height: 32px;
+  padding: 2px 5px;
+  font-size: 18px;
+  background-color: #eee;
+  border: none;
+  border-radius: 10px;
+}
+.input:focus-visible {
+  outline: 1px solid gray;
+}

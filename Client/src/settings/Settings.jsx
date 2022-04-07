@@ -1,5 +1,5 @@
 import css from "./Settings.module.css"
-import { Button } from "../button/Button"
+import { Button } from "../shared/button/Button"
 
 export const Settings = (props) => {
   switch (props.version) {
