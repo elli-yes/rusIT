@@ -4,17 +4,7 @@
   align-items: center;
   width: 100%;
 }
-.searchField {
-  width: 50%;
-  height: 32px;
-  padding: 2px 5px;
-  font-size: 18px;
-  background-color: lightcyan;
-  border: none;
-}
-.searchField:focus-visible {
-  outline: 1px solid gray;
-}
+
 .ico {
   content: "";
   height: 15px;

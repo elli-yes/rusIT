@@ -16,7 +16,6 @@
 }
 
 .verticalMenu div {
-  background-color: eee;
   color: black;
   display: block;
   padding: 12px;
@@ -24,10 +23,10 @@
 }
 
 .verticalMenu div:hover {
-  background-color: ccc;
+  background-color: #eee;
 }
 
 .verticalMenu div.active {
-  background-color: lightskyblue; /* Add a green color to the "active/current" link */
+  background-color: cornflowerblue; /* Add a green color to the "active/current" link */
   color: white;
 }

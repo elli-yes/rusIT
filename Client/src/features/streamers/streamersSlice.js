@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
   streamers: [
-    { status: 1, title: "Doka2super", login: "Maddyson" },
-    { status: 0, title: "CSGOsuper", login: "NAVI" },
     { status: 1, title: "TANKIsuper", login: "ZapZAp" },
+    { status: 0, title: "CSGOsuper", login: "NAVI" },
     { status: 0, title: "Pool and bikini", login: "Boobs1999" },
+    { status: 1, title: "Doka2super", login: "Maddyson" },
+    { status: 0, title: "BabaGE", login: "GarryPotniy from spanchbob" },
+    { status: 0, title: "VIM", login: "kirill BigSmoke kumma" },
   ],
 }
 
@@ -21,7 +23,7 @@ export const streamersSlice = createSlice({
       state.streamers.filter((stream) => stream === action.payload)
       console.log(state.streamers)
     },
-    getStreamers: (state, action) => {
+    setStreamers: (state, action) => {
       state.online += action.payload
     },
   },
