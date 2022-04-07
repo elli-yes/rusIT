@@ -8,8 +8,7 @@ export const MainRouter = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Broadcasts />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/account/:menu" element={<Account />} />
+        <Route path="/account/*" element={<Account />} />
         <Route path="/stream/:login" element={<BroadcastItem />} />
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,7 @@
 .container {
   padding: 10px;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: auto 3fr;
 }
 .left {
   border-right: solid 1px lightskyblue;
@@ -10,23 +10,26 @@
 .main {
   padding: 10px;
 }
-
+.title {
+  padding-left: 10px;
+  grid-column: 1 / 5;
+}
 .verticalMenu {
   width: 200px;
 }
 
-.verticalMenu div {
+.verticalMenu a {
   color: black;
   display: block;
   padding: 12px;
   text-decoration: none;
 }
 
-.verticalMenu div:hover {
+.verticalMenu a:hover {
   background-color: #eee;
 }
 
-.verticalMenu div.active {
+.verticalMenu a.active {
   background-color: cornflowerblue; /* Add a green color to the "active/current" link */
   color: white;
 }
