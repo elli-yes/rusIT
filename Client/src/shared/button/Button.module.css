@@ -1,16 +1,31 @@
 .button {
   width: 90px;
-  height: 44px;
-  background-color: lightskyblue;
+  height: 30px;
+  border-radius: 5px;
+  background-color: cornflowerblue;
+  color: white;
+  font-weight: bold;
   margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: solid 1px gray;
+  border: none;
 }
 .info {
   background-color: white;
 }
 .confirm {
   background-color: darkmagenta;
+}
+.button:hover {
+  transition: 300ms;
+  background-color: lightgray;
+  color: black;
+  border: solid 1px black;
+}
+.button:active {
+  transition: 300ms;
+  background-color: cornflowerblue;
+  color: white;
+  border: solid 1px black;
 }
