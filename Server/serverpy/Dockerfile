@@ -5,13 +5,13 @@ FROM python:3.9
 WORKDIR /usr/src/app
 
 # 
-COPY ./requirements.txt .
+COPY ./req.txt .
 
 # 
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r req.txt
 
 # 
-COPY main.py .
+COPY . .
 
 # 
 CMD ["uvicorn", "main:app", "--proxy-headers", "--forwarded-allow-ips='*'", "--host", "0.0.0.0", "--port", "8000"]

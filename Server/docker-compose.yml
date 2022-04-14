@@ -10,5 +10,5 @@ services:
       - ./data:/tmp/hls
 
   auth:
-    build: ./auth
+    build: ./serverpy
     container_name: auth_server_py
