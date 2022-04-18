@@ -3,8 +3,11 @@ import { useParams, NavLink } from "react-router-dom"
 import { VerticalMenu } from "./VerticalMenu"
 import { Header } from "../shared/header/Header"
 import { SettingsRouter } from "./SettingsRouter"
+import { post } from "./authentificate"
 
 export const Account = (props) => {
+  post()
+
   const { menu } = useParams()
   return (
     <>
