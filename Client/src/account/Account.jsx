@@ -6,7 +6,7 @@ import { SettingsRouter } from "./SettingsRouter"
 import { post } from "./authentificate"
 
 export const Account = (props) => {
-  post()
+  // post()
 
   const { menu } = useParams()
   return (

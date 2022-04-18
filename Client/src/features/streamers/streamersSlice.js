@@ -8,6 +8,9 @@ const initialState = {
     { status: 1, title: "Doka2super", login: "Maddyson" },
     { status: 0, title: "BabaGE", login: "GarryPotniy from spanchbob" },
     { status: 0, title: "VIM", login: "kirill BigSmoke kumma" },
+    { status: 1, title: "OBS_RUSICH_DEV_OFFICIAL", login: "egor" },
+    { status: 1, title: "ARTEM_PR", login: "artem1" },
+    { status: 1, title: "kumma", login: "artem2" },
   ],
 }
 

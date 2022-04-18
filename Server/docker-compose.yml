@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   rtmp:
     build: ./rtmp
@@ -12,3 +12,8 @@ services:
   auth:
     build: ./serverpy
     container_name: auth_server_py
+
+  # client:
+  #   build: ../Client
+  #   ports: [3000:80]
+  #   container_name: client

@@ -1,6 +1,7 @@
 import React from "react"
 import videojs from "video.js"
 import "video.js/dist/video-js.css"
+import "./V.css"
 
 export const VideoJS = (props) => {
   const videoRef = React.useRef("http://localhost:8080/hls/artem.m3u8")

@@ -1,10 +1,43 @@
-.broadcastItem {
-  border: solid 5px lightblue;
-  max-width: 40%;
+.chat {
+  background-color: cornflowerblue;
+  color: white;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
 }
-.about {
+.mssg {
+  border: 1px solid cornflowerblue;
+}
+.input {
+  width: 100%;
+}
+.newmessage {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
+  border: 1px solid cornflowerblue;
+}
+.messages {
+  display: grid;
+  grid-template-rows: repeat(12, 1fr);
+  min-height: 70vh;
+  border: 1px solid cornflowerblue;
+}
+.verticalMenu a.active {
+  color: black;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.broadcastItem {
+  border: solid 2px lightskyblue;
 }
 .info {
+  border: solid 2px lightskyblue;
+
   padding: 7px;
   font-size: 18px;
 }
