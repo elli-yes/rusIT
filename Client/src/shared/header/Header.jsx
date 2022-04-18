@@ -14,6 +14,9 @@ export const Header = ({ searchQuerry, setSearchQuerry }) => {
         searchQuerry={searchQuerry}
         setSearchQuerry={setSearchQuerry}
       />
+      <Link to="/channel">
+        <Button children={"Channel"} variant={"confirm"} />
+      </Link>
       <Link to="/account">
         <Button children={"Profile"} />
       </Link>

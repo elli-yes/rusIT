@@ -1,7 +1,6 @@
 import css from "./Account.module.css"
 import { useParams, NavLink } from "react-router-dom"
 import { VerticalMenu } from "./VerticalMenu"
-import { Settings } from "./Settings"
 import { Header } from "../shared/header/Header"
 import { SettingsRouter } from "./SettingsRouter"
 
