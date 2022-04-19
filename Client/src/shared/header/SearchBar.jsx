@@ -8,7 +8,7 @@ export const SearchBar = ({ searchQuerry, setSearchQuerry }) => {
     <div className={css.container}>
       <Input
         value={searchQuerry}
-        onChange={(e) => setSearchQuerry(e.target.value)}
+        onChange={setSearchQuerry}
         placeholder={"Search..."}
       />
       <Button

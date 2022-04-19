@@ -62,8 +62,10 @@ async def post_token(user_in: schemas.UserIn, res: Response, db: Session = Depen
     res.set_cookie(
         key='refresh_token',
         value=refresh_token,
+        expires=86400*30,
+        path='/',
         httponly=True,
-        samesite='lax',
+        samesite="lax",
     )
 
     return {"access_token": access_token, "refresh_token": refresh_token}
@@ -76,10 +78,9 @@ async def refresh_tokens(
         refresh_token: Optional[str] = Cookie(None),
         db: Session = Depends(get_db)
 ):
-    token = getattr(body, 'refreshToken') or refresh_token
-
+    token = getattr(body, 'refresh_token',None) or refresh_token
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithm=ALGORITHM)
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
 
         user_db = crud.get_user_by_username(db, payload['username'])
 
@@ -92,8 +93,10 @@ async def refresh_tokens(
         res.set_cookie(
             key='refresh_token',
             value=refresh_token,
+            expires=86400*30,
+            path='/',
             httponly=True,
-            samesite='lax',
+            samesite="lax",
         )
 
         return {'access_token': access_token, 'refresh_token': refresh_token}
@@ -108,7 +111,7 @@ async def get_current_user(req: Request):
         raise HTTPException(status_code=401, detail='Not authorized')
 
     try:
-        user = jwt.decode(token, SECRET_KEY, algorithm=ALGORITHM)
+        user = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         if user is None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -149,7 +152,10 @@ def get_user(username: str, db: Session = Depends(get_db)):
 
 origins = [
     "http://auth_server_py:8000",
-    "http://0.0.0.0:8000"
+    "http://0.0.0.0:8000",
+    "http://localhost:3000",
+    "http://192.168.1.103:3000",
+
 ]
 
 app.add_middleware(

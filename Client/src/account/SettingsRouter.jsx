@@ -1,18 +1,21 @@
 import { Route, Routes, Navigate } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Authorization } from "./Authorization"
 import { Login } from "./Login"
 import { Token } from "./Token"
 import { Password } from "./Password"
 import { AccountInfo } from "./AccountInfo"
+import { observer } from "mobx-react-lite" // Or "mobx-react".
+import { authStore } from "../app/storeMobx.js"
 
-export const SettingsRouter = () => {
-  const [isAuth, setAuth] = useState(1)
+export const SettingsRouter = observer(() => {
+  const [isAuth, setAuth] = useState(authStore.isAuthenticated)
 
   function auth() {
     console.log("DONE")
     isAuth ? setAuth(0) : setAuth(1)
   }
+  console.log(authStore.isAuthenticated)
 
   if (isAuth)
     return (
@@ -29,4 +32,4 @@ export const SettingsRouter = () => {
       <Route path="/*" element={<Navigate replace to="/account" />} />
     </Routes>
   )
-}
+})
