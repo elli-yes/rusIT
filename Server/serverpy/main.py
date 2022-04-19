@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from typing import List, Optional
-from fastapi import Body, Cookie, Depends, FastAPI, HTTPException, status
+from fastapi import Body, Cookie, Depends, FastAPI, HTTPException, WebSocket, status
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from sqlalchemy.orm import Session

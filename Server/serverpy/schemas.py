@@ -18,3 +18,7 @@ class User_out(BaseModel):
 
 class User_DB(User_out):
     hashed_password: str
+
+
+class RefreshTokens(BaseModel):
+    refresh_token: str
