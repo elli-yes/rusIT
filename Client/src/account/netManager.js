@@ -20,14 +20,26 @@ export const login = function (login, password) {
 }
 export const refresh = function () {
   console.log("AXIOS")
-  axios
-    .post("http://localhost:8000/refresh-tokens", {}, { withCredentials: true })
+  return axios
+    .post("http://localhost:8000/refresh-tokens", undefined, {
+      withCredentials: true,
+    })
     .then(function (response) {
       axios.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`
       console.log(response)
+      return response
     })
     .catch(function (error) {
       console.log(error)
+    })
+}
+export const usersMe = function () {
+  console.log("AXIOS")
+  return axios
+    .get("http://localhost:8000/users/me", {}, { withCredentials: true })
+    .then(function (response) {
+      console.log(response.data.username)
+      return response.data.username
     })
 }
 // export const post1 = function () {

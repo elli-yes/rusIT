@@ -1,17 +1,32 @@
 import "./App.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MainRouter } from "./router/MainRouter"
-import { Counter } from "./features/streamers/Streamers"
+import { useRefresh } from "./shared/hooks/useRefresh"
+import { authStore } from "./app/storeMobx"
+import { observer } from "mobx-react-lite" // Or "mobx-react".
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = observer(() => {
+  const { data, loading, request, success } = useRefresh()
 
-  return (
-    <div className="App">
-      <MainRouter />
-      {/* <Counter></Counter> */}
-    </div>
-  )
-}
+  useEffect(() => {
+    request()
+  }, [])
+  useEffect(() => {
+    if (success) {
+      console.log("JUK")
+      authStore.isAuthenticated = true
+    }
+  }, [success])
+  console.log("LOL", success, authStore.isAuthenticated)
+
+  if (loading) return null
+  else
+    return (
+      <div className="App">
+        <MainRouter />
+        {/* <Counter></Counter> */}
+      </div>
+    )
+})
 
 export default App
