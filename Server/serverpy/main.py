@@ -1,6 +1,7 @@
+from datetime import datetime, timedelta
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from typing import List, Optional
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Body, Cookie, Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -9,13 +10,12 @@ from fastapi.responses import Response
 from fastapi.requests import Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from fastapi import  WebSocket
-
 import crud
 import models
 import schemas
 import services
 from database import SessionLocal, engine
+from schemas import RefreshTokens
 
 
 SECRET_KEY = "737ca6da1bf47a33babc40e0c55aca8cf92f56be3d83a367e93486aa21caea62"
@@ -37,30 +37,87 @@ def get_db():
         db.close()
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+def time_from_now(delta):
+    return datetime.now() + delta
 
 
-@app.post("/token")
-async def post_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user_db: schemas.User_DB = services.authenticate_user(
-        db, form_data.username, form_data.password)
+def gen_tokens(user: dict):
+    payload = user
+    payload['exp'] = time_from_now(timedelta(minutes=30))
+    access_token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+    payload['exp'] = time_from_now(timedelta(days=30))
+    refresh_token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+    return (access_token, refresh_token)
+
+
+@app.post("/login")
+async def post_token(user_in: schemas.UserIn, res: Response, db: Session = Depends(get_db)):
+    user_db = services.authenticate_user(
+        db, user_in.username, user_in.password)
     if not user_db:
         raise HTTPException(status_code=400, detail="User doesn't exist")
-    user = user_db.as_dict()
-    payload = schemas.User_out(**user)
-    access_token = jwt.encode(payload.dict(), SECRET_KEY, ALGORITHM)
-    return {"access_token": access_token, "token_type": "bearer"}
+    access_token, refresh_token = gen_tokens(user_db.as_dict())
+
+    res.set_cookie(
+        key='refresh_token',
+        value=refresh_token,
+        httponly=True,
+        samesite='lax',
+    )
+
+    return {"access_token": access_token, "refresh_token": refresh_token}
 
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
-    user = jwt.decode(token, SECRET_KEY, ALGORITHM)
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
+@app.post('/refresh-tokens')
+async def refresh_tokens(
+        res: Response,
+        body: Optional[RefreshTokens] = Body(default=None),
+        refresh_token: Optional[str] = Cookie(None),
+        db: Session = Depends(get_db)
+):
+    token = getattr(body, 'refreshToken') or refresh_token
+
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithm=ALGORITHM)
+
+        user_db = crud.get_user_by_username(db, payload['username'])
+
+        if user_db is None:
+            raise HTTPException(status_code=401,
+                                detail="User with given id doesn't exits")
+
+        (access_token, refresh_token) = gen_tokens(user_db.as_dict())
+
+        res.set_cookie(
+            key='refresh_token',
+            value=refresh_token,
+            httponly=True,
+            samesite='lax',
         )
-    return user
+
+        return {'access_token': access_token, 'refresh_token': refresh_token}
+    except BaseException as err:
+        raise HTTPException(status_code=401, detail='Invalid token') from err
+
+
+async def get_current_user(req: Request):
+    token = req.headers.get('Authorization').split(' ')[1]
+
+    if token is None:
+        raise HTTPException(status_code=401, detail='Not authorized')
+
+    try:
+        user = jwt.decode(token, SECRET_KEY, algorithm=ALGORITHM)
+        if user is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid authentication credentials"
+            )
+
+        return user
+    except BaseException:
+        raise HTTPException(status_code=401, detail='Not authorized')
 
 
 @app.get("/users/me")
@@ -92,9 +149,7 @@ def get_user(username: str, db: Session = Depends(get_db)):
 
 origins = [
     "http://auth_server_py:8000",
-    "http://0.0.0.0:8000",
-    "http://localhost:3000",
-    "http://172.20.0.1:3000"
+    "http://0.0.0.0:8000"
 ]
 
 app.add_middleware(
@@ -124,14 +179,13 @@ async def auth(request: Request):
     return Response(status_code=200)
 
 
-
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
 
     async def connect(self, websocket: WebSocket, id: int):
         await websocket.accept()
-        self.active_connections.append({"websocket":websocket, "id":id})
+        self.active_connections.append({"websocket": websocket, "id": id})
 
     def disconnect(self, websocket: WebSocket):
         self.active_connections.remove(websocket)
@@ -141,13 +195,13 @@ class ConnectionManager:
 
     async def broadcast(self, message: str, id: int):
         for connection in self.active_connections:
-            print(id,connection["id"])
+            print(id, connection["id"])
             if id != connection["id"]:
                 await connection["websocket"].send_text(message)
 
 
-
 manager = ConnectionManager()
+
 
 @app.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
