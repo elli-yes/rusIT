@@ -7,7 +7,7 @@ import { Password } from "./Password"
 import { AccountInfo } from "./AccountInfo"
 
 export const SettingsRouter = () => {
-  const [isAuth, setAuth] = useState(1)
+  const [isAuth, setAuth] = useState(0)
 
   function auth() {
     console.log("DONE")

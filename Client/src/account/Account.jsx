@@ -1,17 +1,18 @@
 import css from "./Account.module.css"
+import { useState, useEffect } from "react"
 import { useParams, NavLink } from "react-router-dom"
 import { VerticalMenu } from "./VerticalMenu"
 import { Header } from "../shared/header/Header"
 import { SettingsRouter } from "./SettingsRouter"
-import { post } from "./authentificate"
 
 export const Account = (props) => {
-  // post()
+  const [searchQuerry, setSearchQuerry] = useState("")
 
   const { menu } = useParams()
+
   return (
     <>
-      <Header />
+      <Header searchQuerry={searchQuerry} setSearchQuerry={setSearchQuerry} />
 
       <div className={css.container}>
         <h2 className={css.title}>Settings</h2>

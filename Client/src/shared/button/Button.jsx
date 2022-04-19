@@ -1,8 +1,12 @@
 import css from "./Button.module.css"
 
-export const Button = ({ children, variant, onClick }) => {
+export const Button = ({ children, variant, onClick, type }) => {
   return (
-    <button onClick={onClick} className={`${css[variant]} ${css.button}`}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={`${css[variant]} ${css.button}`}
+    >
       {children}
     </button>
   )

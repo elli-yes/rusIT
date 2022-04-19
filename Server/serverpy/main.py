@@ -62,8 +62,10 @@ async def post_token(user_in: schemas.UserIn, res: Response, db: Session = Depen
     res.set_cookie(
         key='refresh_token',
         value=refresh_token,
+        expires=86400*30,
+        path='/',
         httponly=True,
-        samesite='lax',
+        samesite="lax",
     )
 
     return {"access_token": access_token, "refresh_token": refresh_token}
@@ -151,6 +153,7 @@ origins = [
     "http://auth_server_py:8000",
     "http://0.0.0.0:8000",
     "http://localhost:3000",
+    "http://192.168.1.103:3000",
 
 ]
 

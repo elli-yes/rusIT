@@ -4,7 +4,7 @@ export const Input = ({ placeholder, value, onChange }) => {
   return (
     <input
       value={value}
-      onChange={onChange}
+      onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       type="text"
       className={css.input}
