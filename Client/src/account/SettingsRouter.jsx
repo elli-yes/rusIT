@@ -10,10 +10,15 @@ import { authStore } from "../app/storeMobx.js"
 
 export const SettingsRouter = observer(() => {
   const [isAuth, setAuth] = useState(authStore.isAuthenticated)
+  useEffect(() => {
+    setAuth(authStore.isAuthenticated)
+  }, [authStore.isAuthenticated])
 
   function auth() {
     console.log("DONE")
-    isAuth ? setAuth(0) : setAuth(1)
+    authStore.isAuthenticated
+      ? (authStore.isAuthenticated = 0)
+      : (authStore.isAuthenticated = 1)
   }
   console.log(authStore.isAuthenticated)
 

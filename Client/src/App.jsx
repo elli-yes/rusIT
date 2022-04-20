@@ -14,7 +14,9 @@ const App = observer(() => {
   useEffect(() => {
     if (success) {
       console.log("JUK")
-      authStore.isAuthenticated = true
+      if (data) {
+        authStore.isAuthenticated = true
+      }
     }
   }, [success])
   console.log("LOL", success, authStore.isAuthenticated)

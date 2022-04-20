@@ -42,6 +42,19 @@ export const usersMe = function () {
       return response.data.username
     })
 }
+export const newUser = function (login, password) {
+  console.log("AXIOS")
+  return axios
+    .post(
+      "http://localhost:8000/users/",
+      { username: login, password: password },
+      { withCredentials: true }
+    )
+    .then(function (response) {
+      console.log(response.data)
+      return response.data
+    })
+}
 // export const post1 = function () {
 //   console.log("AXIOS")
 //   axios
