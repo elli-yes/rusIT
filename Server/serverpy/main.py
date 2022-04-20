@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from time import sleep
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from typing import List, Optional
 from fastapi import Body, Cookie, Depends, FastAPI, HTTPException, WebSocket, status
@@ -26,6 +27,23 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+
+origins = [
+    "http://auth_server_py:8000",
+    "http://0.0.0.0:8000",
+    "http://localhost:3000",
+    "http://192.168.1.103:3000",
+
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Dependency
 
 
@@ -51,7 +69,26 @@ def gen_tokens(user: dict):
     return (access_token, refresh_token)
 
 
-@app.post("/login")
+async def get_current_user(req: Request):
+    token = req.headers.get('Authorization').split(' ')[1]
+
+    if token is None:
+        raise HTTPException(status_code=401, detail='Not authorized')
+
+    try:
+        user = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        if user is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid authentication credentials"
+            )
+
+        return user
+    except BaseException:
+        raise HTTPException(status_code=401, detail='Not authorized')
+
+
+@app.post("/api/login")
 async def post_token(user_in: schemas.UserIn, res: Response, db: Session = Depends(get_db)):
     user_db = services.authenticate_user(
         db, user_in.username, user_in.password)
@@ -71,14 +108,20 @@ async def post_token(user_in: schemas.UserIn, res: Response, db: Session = Depen
     return {"access_token": access_token, "refresh_token": refresh_token}
 
 
-@app.post('/refresh-tokens')
+@app.post('/api/logout')
+async def logout(response: Response):
+    response.delete_cookie("refresh_token")
+    return response
+
+
+@app.post('/api/refresh-tokens')
 async def refresh_tokens(
         res: Response,
         body: Optional[RefreshTokens] = Body(default=None),
         refresh_token: Optional[str] = Cookie(None),
         db: Session = Depends(get_db)
 ):
-    token = getattr(body, 'refresh_token',None) or refresh_token
+    token = getattr(body, 'refresh_token', None) or refresh_token
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
 
@@ -104,31 +147,12 @@ async def refresh_tokens(
         raise HTTPException(status_code=401, detail='Invalid token') from err
 
 
-async def get_current_user(req: Request):
-    token = req.headers.get('Authorization').split(' ')[1]
-
-    if token is None:
-        raise HTTPException(status_code=401, detail='Not authorized')
-
-    try:
-        user = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        if user is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid authentication credentials"
-            )
-
-        return user
-    except BaseException:
-        raise HTTPException(status_code=401, detail='Not authorized')
-
-
-@app.get("/users/me")
+@app.get("/api/users/me")
 def cur_user(current_user: schemas.User_out = Depends(get_current_user)):
     return current_user
 
 
-@app.post("/users/", response_model=schemas.User_out)
+@app.post("/api/users/", response_model=schemas.User_out)
 def create_user(user: schemas.UserIn, db: Session = Depends(get_db)):
     user_db = crud.get_user_by_username(db, user.username)
     if user_db:
@@ -136,13 +160,13 @@ def create_user(user: schemas.UserIn, db: Session = Depends(get_db)):
     return crud.create_user(db, user)
 
 
-@app.get("/users/", response_model=List[schemas.User_out])
+@app.get("/api/users/", response_model=List[schemas.User_out])
 def get_all_users(db: Session = Depends(get_db)):
     users = crud.get_users(db)
     return users
 
 
-@app.get("/users/{username}", response_model=schemas.User_out)
+@app.get("/api/users/{username}", response_model=schemas.User_out)
 def get_user(username: str, db: Session = Depends(get_db)):
     user = crud.get_user_by_username(db, username=username)
     if not user:
@@ -150,39 +174,46 @@ def get_user(username: str, db: Session = Depends(get_db)):
     return user
 
 
-origins = [
-    "http://auth_server_py:8000",
-    "http://0.0.0.0:8000",
-    "http://localhost:3000",
-    "http://192.168.1.103:3000",
-
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-@app.post('/auth')
+@app.post('/api/auth')
 async def auth(request: Request, db: Session = Depends(get_db)):
     data = await request.form()
-    user = crud.get_user_by_username(db, data.get('name'))
+    name = data.get('name')
     key = data.get('key')
-    if key == user.key:
+    if crud.check_auth(db, name, key):
         return Response(status_code=200)
     return Response(status_code=403)
 
 
-@app.post('/done')
-async def auth(request: Request):
+@app.post('/api/done')
+async def auth(request: Request, db: Session = Depends(get_db)):
     data = await request.form()
     if data.get('app') == '':
-        ...
+        crud.set_user_inactive(db, data.get('name'))
     return Response(status_code=200)
+
+
+@app.post('/api/set_title')
+def set_title(user: schemas.User_out = Depends(get_current_user), title: str = Body(...), db: Session = Depends(get_db)):
+    return crud.update_stream_title(db, username=user.username, title=title)
+
+
+@app.get('/api/stream/{username}', response_model=schemas.Stream_out)
+def get_stream_by_username(username: str, db: Session = Depends(get_db)):
+    user = crud.get_user_by_username(db, username=username)
+    if not user.is_active:
+        return HTTPException(status_code="user isn't active")
+    return user.as_dict()
+
+
+@app.post('/make_user_inactive/{username}', response_model=schemas.User_out)
+def make_inactive(username: str, db: Session = Depends(get_db)):
+    return crud.set_user_inactive(db, username)
+
+
+@app.get('/api/active_users', response_model=List[schemas.User_out])
+def get_all_active_users(db: Session = Depends(get_db)):
+    users = crud.get_all_active_users(db)
+    return users
 
 
 class ConnectionManager:
@@ -209,7 +240,7 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 
-@app.websocket("/ws/{client_id}")
+@ app.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await manager.connect(websocket, client_id)
     while True:

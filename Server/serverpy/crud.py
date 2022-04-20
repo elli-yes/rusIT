@@ -24,3 +24,36 @@ def create_user(db: Session, user: schemas.UserIn):
     db.commit()
     db.refresh(user_db)
     return(user_db)
+
+
+def update_stream_title(db: Session, username: str, title: str):
+    user = db.query(models.User).filter(
+        models.User.username == username).first()
+    user.stream_title = title
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+def set_user_inactive(db: Session, username: str):
+    user = db.query(models.User).filter(
+        models.User.username == username).first()
+    user.stream_title = ""
+    user.is_active = 0
+    db.add(user)
+    db.commit()
+    return user
+
+
+def get_all_active_users(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.User).filter(models.User.is_active == 1).offset(skip).limit(limit).all()
+
+
+def check_auth(db: Session, username: str, key: str):
+    user = get_user_by_username(db, username)
+    if user.key == key:
+        user.is_active = 1
+        db.add(user)
+        db.commit()
+        return True
+    return False

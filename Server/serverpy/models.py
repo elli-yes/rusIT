@@ -12,6 +12,8 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     key = Column(String)
+    stream_title = Column(String, default="")
+    is_active = Column(Integer, default=0)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}

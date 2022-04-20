@@ -1,4 +1,3 @@
-from uuid import UUID
 from pydantic import BaseModel
 
 
@@ -18,6 +17,11 @@ class User_out(BaseModel):
 
 class User_DB(User_out):
     hashed_password: str
+
+
+class Stream_out(BaseModel):
+    username: str
+    stream_title: str
 
 
 class RefreshTokens(BaseModel):

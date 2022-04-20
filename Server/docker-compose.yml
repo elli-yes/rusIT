@@ -12,7 +12,8 @@ services:
   auth:
     build: ./serverpy
     container_name: auth_server_py
-
+    volumes:
+      - ./auth/sql_app.db:/usr/src/app/sql_app.db
   # client:
   #   build: ../Client
   #   ports: [3000:80]
