@@ -97,7 +97,7 @@ export const BroadcastItem = () => {
           <div className={css.newmessage}>
             <Input
               value={mvalue}
-              onChange={(e) => setMvalue(e.target.value)}
+              onChange={setMvalue}
               placeholder={"Message..."}
             />
             <Button onClick={sendMessage} children="Send" />
