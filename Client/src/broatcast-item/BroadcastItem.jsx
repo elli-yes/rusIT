@@ -27,7 +27,6 @@ export const BroadcastItem = () => {
       console.log("player will dispose")
     })
   }
-  console.log(`http://0.0.0.0:8080/hls/${login}.m3u8`)
   const videoJsOptions = {
     autoplay: false,
     controls: true,

@@ -12,6 +12,8 @@ services:
 
   auth:
     build: ./serverpy
+    ports:
+      - "8000:8000"
     container_name: auth_server_py
     volumes:
       - ./serverpy/sql_app.db:/usr/src/app/sql_app.db
