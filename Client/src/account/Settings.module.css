@@ -22,7 +22,7 @@ h2 {
   grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-template-columns: 1fr;
   position: relative;
-  animation: example 1s;
+  animation: example 0.3s;
 }
 .form div {
   display: flex;
@@ -34,8 +34,10 @@ h2 {
 @keyframes example {
   from {
     top: 200px;
+    opacity: 0;
   }
   to {
     top: 0px;
+    opacity: 1;
   }
 }
