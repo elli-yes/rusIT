@@ -110,7 +110,6 @@ async def post_token(user_in: schemas.UserIn, res: Response, db: Session = Depen
 
 
 @app.post('/api/logout')
-<<<<<<< HEAD
 async def logout(response: Response):
     response.set_cookie(
         key='refresh_token',
@@ -123,12 +122,6 @@ async def logout(response: Response):
     return {"status": "done"}
 
 
-=======
-async def logout(request: Request):
-    request.delete_cookie("refresh_token")
-    return response
-    
->>>>>>> d714e9a (logout)
 @app.post('/api/refresh-tokens')
 async def refresh_tokens(
         res: Response,
