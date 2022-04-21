@@ -212,12 +212,7 @@ def get_stream_by_username(username: str, db: Session = Depends(get_db)):
     return user.as_dict()
 
 
-@app.post('/make_user_inactive/{username}', response_model=schemas.User_out)
-def make_inactive(username: str, db: Session = Depends(get_db)):
-    return crud.set_user_inactive(db, username)
-
-
-@app.get('/api/active_users', response_model=List[schemas.User_out])
+@app.get('/api/streams', response_model=List[schemas.Stream_out])
 def get_all_active_users(db: Session = Depends(get_db)):
     users = crud.get_all_active_users(db)
     return users
