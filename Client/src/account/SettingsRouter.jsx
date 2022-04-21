@@ -16,7 +16,6 @@ export const SettingsRouter = observer(() => {
   }, [authStore.isAuthenticated])
 
   function auth() {
-    console.log("DONE")
     if (authStore.isAuthenticated) {
       logout()
       authStore.isAuthenticated = 0
