@@ -8,12 +8,13 @@ services:
     container_name: rtmp_server_py
     volumes:
       - ./data:/tmp/hls
+  #    - ./frames:/tmp/vc
 
   auth:
     build: ./serverpy
     container_name: auth_server_py
     volumes:
-      - ./auth/sql_app.db:/usr/src/app/sql_app.db
+      - ./serverpy/sql_app.db:/usr/src/app/sql_app.db
   # client:
   #   build: ../Client
   #   ports: [3000:80]
