@@ -81,7 +81,15 @@ export const Authorization = ({ variant, auth }) => {
             }}
           >
             {reg.success ? (
-              <h3>Successfully registered, please login</h3>
+              <>
+                <h3>Successfully registered, please login</h3>
+                <Button
+                  variant={"confirm"}
+                  type="button"
+                  children={"Log in"}
+                  onClick={switchSign}
+                />
+              </>
             ) : (
               <>
                 <h3>Registration</h3>
