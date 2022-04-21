@@ -11,6 +11,8 @@ export const Authorization = ({ variant, auth }) => {
   const [pass, setPass] = useState("")
   const [usernameR, setUsernameR] = useState("")
   const [passR, setPassR] = useState("")
+  const [sign, setSign] = useState(1)
+
   // const [] = useState()
 
   const { data, loading, request } = useLogin()
@@ -29,62 +31,85 @@ export const Authorization = ({ variant, auth }) => {
   //     auth()
   //   }
   // }, [reg.data])
-
+  function switchSign() {
+    sign ? setSign(0) : setSign(1)
+  }
   return loading ? (
     <h1>LOADING</h1>
   ) : (
     <>
       <h2>Please log in</h2>
       <div className={css.containerLog}>
-        <form
-          className={css.form}
-          onSubmit={(e) => {
-            e.preventDefault()
-            request(username, pass)
-          }}
-        >
-          <h3>Login</h3>
+        {sign ? (
+          <form
+            className={css.form}
+            onSubmit={(e) => {
+              e.preventDefault()
+              request(username, pass)
+            }}
+          >
+            <h3>Login</h3>
 
-          <Input
-            placeholder={"Login"}
-            value={username}
-            onChange={setUsername}
-          />
-          <Input
-            type="password"
-            placeholder={"Password"}
-            value={pass}
-            onChange={setPass}
-          />
-          <Button type="submit" children={"Log in"} />
-        </form>
-        <form
-          className={css.form}
-          onSubmit={(e) => {
-            e.preventDefault()
-            reg.request(usernameR, passR)
-          }}
-        >
-          {reg.success ? (
-            <h3>Successfully registered, please login</h3>
-          ) : (
-            <>
-              <h3>Registration</h3>
-              <Input
-                placeholder={"Login"}
-                value={usernameR}
-                onChange={setUsernameR}
+            <Input
+              placeholder={"Login"}
+              value={username}
+              onChange={setUsername}
+            />
+            <Input
+              type="password"
+              placeholder={"Password"}
+              value={pass}
+              onChange={setPass}
+            />
+            <div>
+              <Button type="submit" children={"Log in"} />
+              <span>or</span>
+              <Button
+                variant={"confirm"}
+                type="button"
+                children={"Registrarion"}
+                onClick={switchSign}
               />
-              <Input
-                type="password"
-                placeholder={"Password"}
-                value={passR}
-                onChange={setPassR}
-              />
-              <Button type="submit" children={"Registration"} />
-            </>
-          )}
-        </form>
+            </div>
+          </form>
+        ) : (
+          <form
+            className={css.form}
+            onSubmit={(e) => {
+              e.preventDefault()
+              reg.request(usernameR, passR)
+            }}
+          >
+            {reg.success ? (
+              <h3>Successfully registered, please login</h3>
+            ) : (
+              <>
+                <h3>Registration</h3>
+                <Input
+                  placeholder={"Login"}
+                  value={usernameR}
+                  onChange={setUsernameR}
+                />
+                <Input
+                  type="password"
+                  placeholder={"Password"}
+                  value={passR}
+                  onChange={setPassR}
+                />
+                <div>
+                  <Button type="submit" children={"Registration"} />
+                  <span>or</span>
+                  <Button
+                    variant={"confirm"}
+                    type="button"
+                    children={"Log in"}
+                    onClick={switchSign}
+                  />
+                </div>
+              </>
+            )}
+          </form>
+        )}
       </div>
     </>
   )
