@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 import { MySelect } from "../shared/select/MySelect"
 import { PlayerBox } from "./PlayerBox"
 import { Header } from "../shared/header/Header.jsx"
+import defImg from "../shared/assets/thumb.png"
 
 export const Broadcasts = () => {
   const streams = useSelector((state) => state.streamers.streamers)
@@ -47,14 +48,15 @@ export const Broadcasts = () => {
             { value: "title", name: "Sort by stream" },
           ]}
         />
-
         {sortedAndSearched.map((stream) => {
+          console.log(stream.thumb)
           return (
             <PlayerBox
               key={stream.login}
               login={stream.login}
               title={stream.title}
               status={stream.status}
+              thumb={defImg}
             />
           )
         })}
