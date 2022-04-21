@@ -18,6 +18,17 @@ export const login = function (login, password) {
       return response.data
     })
 }
+export const logout = function () {
+  return axios
+    .post("http://localhost:8000/api/logout", {}, { withCredentials: true })
+    .then(function (response) {
+      console.log(response)
+      return response
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+}
 export const refresh = function () {
   console.log("AXIOS")
   return axios
@@ -38,8 +49,8 @@ export const usersMe = function () {
   return axios
     .get("http://localhost:8000/api/users/me", {}, { withCredentials: true })
     .then(function (response) {
-      console.log(response.data.username)
-      return response.data.username
+      // console.log(response.data.username)
+      return response.data
     })
 }
 export const newUser = function (login, password) {

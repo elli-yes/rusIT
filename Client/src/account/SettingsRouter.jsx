@@ -7,6 +7,7 @@ import { Password } from "./Password"
 import { AccountInfo } from "./AccountInfo"
 import { observer } from "mobx-react-lite" // Or "mobx-react".
 import { authStore } from "../app/storeMobx.js"
+import { logout } from "./netManager"
 
 export const SettingsRouter = observer(() => {
   const [isAuth, setAuth] = useState(authStore.isAuthenticated)
@@ -16,9 +17,12 @@ export const SettingsRouter = observer(() => {
 
   function auth() {
     console.log("DONE")
-    authStore.isAuthenticated
-      ? (authStore.isAuthenticated = 0)
-      : (authStore.isAuthenticated = 1)
+    if (authStore.isAuthenticated) {
+      logout()
+      authStore.isAuthenticated = 0
+    } else {
+      authStore.isAuthenticated = 1
+    }
   }
   console.log(authStore.isAuthenticated)
 
