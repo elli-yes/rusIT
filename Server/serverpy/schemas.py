@@ -23,6 +23,9 @@ class Stream_out(BaseModel):
     username: str
     stream_title: str
 
+class Config:
+    orm_mode = True
+
 
 class RefreshTokens(BaseModel):
     refresh_token: str
