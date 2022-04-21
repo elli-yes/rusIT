@@ -2,6 +2,11 @@
   border: 3px solid lightblue;
   min-height: 200px;
   margin-bottom: 5px;
+  display: flex;
+  /* justify-content: center; */
+}
+.playerbox img {
+  width: 100%;
 }
 .playerboxTitle {
   display: grid;
