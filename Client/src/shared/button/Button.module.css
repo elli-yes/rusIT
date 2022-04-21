@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   border: none;
+  position: relative;
 }
 .info {
   background-color: white;
@@ -21,11 +22,25 @@
 .exit {
   background-color: tomato;
 }
-.button:hover {
+/* .button:hover {
   transition: 300ms;
-  background-color: lightgray;
+  background-color: w;
   color: black;
   border: solid 1px black;
+} */
+button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.3);
+  /* border-radius: 5px; */
+  transition: all 0.3s ease-in-out;
+}
+button:hover:before {
+  width: 100%;
 }
 .button:active {
   transition: 300ms;
