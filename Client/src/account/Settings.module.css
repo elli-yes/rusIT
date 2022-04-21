@@ -9,7 +9,7 @@ h2 {
 }
 .containerLog {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   padding: 10px;
 }
 .container {
@@ -18,10 +18,24 @@ h2 {
 .form {
   margin-top: 10px;
   display: grid;
-  max-width: 40%;
-  grid-template-rows: 1fr;
+  max-width: 20%;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
   grid-template-columns: 1fr;
+  position: relative;
+  animation: example 1s;
+}
+.form div {
+  display: flex;
+  justify-content: space-between;
 }
 .form * {
   margin: 5px 0px;
+}
+@keyframes example {
+  from {
+    top: 200px;
+  }
+  to {
+    top: 0px;
+  }
 }
