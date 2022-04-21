@@ -8,22 +8,20 @@ import defImg from "../shared/assets/thumb.png"
 import { useGetStreams } from "../shared/hooks/useStreams"
 
 export const Broadcasts = () => {
-  // const streams = useSelector((state) => state.streamers.streamers)
-  const [streams, setStreams] = useState([])
+  const streams = useSelector((state) => state.streamers.streamers)
+  // const [streams, setStreams] = useState([])
   const [selectedSort, setSort] = useState("status")
   const [searchQuerry, setSearchQuerry] = useState("")
 
   const { data, loading, request, success } = useGetStreams()
 
-  useEffect(() => {
-    request()
-  }, [])
+  // useEffect(() => {
+  //   request()
+  // }, [])
 
-  useEffect(() => {
-    if (data) {
-      setStreams(data)
-    }
-  }, [success])
+  // useEffect(() => {
+  //   setStreams(data)
+  // }, [success])
 
   const sortedStreams = useMemo(() => {
     if (selectedSort === "status") {
@@ -61,18 +59,22 @@ export const Broadcasts = () => {
             { value: "title", name: "Sort by stream" },
           ]}
         />
-        {sortedAndSearched.map((stream) => {
-          console.log(stream.thumb)
-          return (
-            <PlayerBox
-              key={stream.login}
-              login={stream.login}
-              title={stream.title}
-              status={stream.status}
-              thumb={defImg}
-            />
-          )
-        })}
+        {sortedAndSearched.length != 0 ? (
+          sortedAndSearched.map((stream) => {
+            console.log(stream.thumb)
+            return (
+              <PlayerBox
+                key={stream.login}
+                login={stream.login}
+                title={stream.title}
+                status={stream.status}
+                thumb={defImg}
+              />
+            )
+          })
+        ) : (
+          <h1>No one streaming now, maybe you'l be a new stream Star?</h1>
+        )}
       </div>
     </>
   )

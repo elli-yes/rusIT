@@ -1,0 +1,14 @@
+.container span {
+  display: block;
+}
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding: 20px;
+}
+.broadcastItem {
+  border: solid 2px lightskyblue;
+  /* width: 50%; */
+}
+.info {
+}
