@@ -1,8 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit"
-import streamersReducer from "../features/streamers/streamersSlice.js"
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
+import streamsReducer from "./stream/streamsSlice"
+import { streamsAPI } from "../API/streamsService.js"
 
+const rootReducer = combineReducers({
+  streamsReducer,
+  [streamsAPI.reducerPath]: streamsAPI.reducer,
+})
 export const store = configureStore({
-  reducer: {
-    streamers: streamersReducer,
-  },
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(streamsAPI.middleware),
 })

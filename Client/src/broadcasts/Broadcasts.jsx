@@ -1,34 +1,31 @@
 import css from "./Broadcasts.module.css"
-import { useState, useEffect, useMemo } from "react"
-import { useSelector } from "react-redux"
-import { MySelect } from "../shared/select/MySelect"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { PlayerBox } from "./PlayerBox"
-import { Header } from "../shared/header/Header.jsx"
 import defImg from "../shared/assets/thumb.png"
-import { useGetStreams } from "../shared/hooks/useStreams"
+import { MySelect } from "../shared/select/MySelect"
+import { Header } from "../shared/header/Header.jsx"
 import { useStreams } from "./useStreams"
+import { fetchStreams } from "../app/stream/streamsActionCreator"
+import { streamsAPI } from "../API/streamsService"
+import { Streams } from "./Streams"
 
 export const Broadcasts = () => {
-  // const streams = useSelector((state) => state.streamers.streamers)
+  const {
+    data: streams,
+    isLoading,
+    error,
+  } = streamsAPI.useFetchAllStreamsQuery("")
+
   const [selectedSort, setSort] = useState("status")
   const [searchQuerry, setSearchQuerry] = useState("")
-  const [streams, setStreams] = useState([])
-
-  const ssStreams = useStreams(streams, selectedSort, searchQuerry)
-
-  const { data, loading, request, success } = useGetStreams()
+  const [ssStreams, setSsStreams] = useState([])
 
   useEffect(() => {
-    request()
-  }, [])
-
-  useEffect(() => {
-    let cleanupFunction = false
-    if (success) {
-      if (!cleanupFunction) setStreams(data)
+    if (streams) {
+      setSsStreams(useStreams(streams, selectedSort, searchQuerry))
     }
-    return () => (cleanupFunction = true)
-  }, [success])
+  }, [streams])
 
   const sortStreams = (sort) => {
     setSort(sort)
@@ -47,21 +44,10 @@ export const Broadcasts = () => {
             { value: "title", name: "Sort by stream" },
           ]}
         />
-        {console.log(streams)}
-        {loading ? (
-          <h2>Loading</h2>
-        ) : ssStreams.length != 0 ? (
-          ssStreams.map((stream, i) => {
-            return (
-              <PlayerBox
-                key={i}
-                login={stream.username}
-                title={stream.stream_title}
-                status={1}
-                thumb={defImg}
-              />
-            )
-          })
+        {isLoading && <h1>LOADING</h1>}
+        {error && <h1>ERR{error}</h1>}
+        {ssStreams.length > 0 ? (
+          <Streams streams={ssStreams} />
         ) : (
           <h1>No one streaming now, maybe you'l be a new stream Star?</h1>
         )}
@@ -69,3 +55,12 @@ export const Broadcasts = () => {
     </>
   )
 }
+// console.log("STR", ld, str)
+// const dispatch = useDispatch()
+// const { streams, isLoading, errors } = useSelector(
+//   (state) => state.streamsReducer
+// )
+
+// useEffect(() => {
+//   dispatch(fetchStreams())
+// }, [])

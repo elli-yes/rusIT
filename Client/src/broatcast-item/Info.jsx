@@ -1,14 +1,15 @@
 import css from "./BroadcastItem.module.css"
 
 export const Info = ({ data }) => {
+  console.log(data)
   return (
     <>
       <div className={css.info}>
         <span>
-          <div className={data[0].status ? css.online : css.offline}></div>
-          <div className={css.login}>{data[0].login}</div>
+          <div className={css.online}></div>
+          <div className={css.username}>{data.username}</div>
         </span>
-        <div className={css.title}>{data[0].title}</div>
+        <div className={css.stream_title}>{data.stream_title}</div>
       </div>
       <div className={css.about}></div>
     </>
