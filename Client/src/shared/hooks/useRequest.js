@@ -16,6 +16,7 @@ export function useRequest(req) {
       } catch (error) {
         console.log(error)
         setError(error)
+        setSuccess(false)
       } finally {
         setLoading(false)
       }

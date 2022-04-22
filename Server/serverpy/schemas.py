@@ -22,9 +22,9 @@ class User_DB(User_out):
 class Stream_out(BaseModel):
     username: str
     stream_title: str
+    class Config:
+        orm_mode = True
 
-class Config:
-    orm_mode = True
 
 
 class RefreshTokens(BaseModel):

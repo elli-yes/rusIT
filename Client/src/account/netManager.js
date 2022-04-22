@@ -1,7 +1,6 @@
 import axios from "axios"
 
 export const login = function (login, password) {
-  console.log(login, password)
   return axios
     .post(
       "http://localhost:8000/api/login",
@@ -13,8 +12,6 @@ export const login = function (login, password) {
     )
     .then(function (response) {
       axios.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`
-      console.log(response.data.access_token)
-      console.log(response.data.refresh_token)
       return response.data
     })
 }
@@ -22,7 +19,6 @@ export const logout = function () {
   return axios
     .post("http://localhost:8000/api/logout", {}, { withCredentials: true })
     .then(function (response) {
-      console.log(response)
       return response
     })
     .catch(function (error) {
@@ -30,14 +26,12 @@ export const logout = function () {
     })
 }
 export const refresh = function () {
-  console.log("AXIOS")
   return axios
     .post("http://localhost:8000/api/refresh-tokens", undefined, {
       withCredentials: true,
     })
     .then(function (response) {
       axios.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`
-      console.log(response)
       return response
     })
     .catch(function (error) {
@@ -45,16 +39,13 @@ export const refresh = function () {
     })
 }
 export const usersMe = function () {
-  console.log("AXIOS")
   return axios
     .get("http://localhost:8000/api/users/me", {}, { withCredentials: true })
     .then(function (response) {
-      // console.log(response.data.username)
       return response.data
     })
 }
 export const newUser = function (login, password) {
-  console.log("AXIOS")
   return axios
     .post(
       "http://localhost:8000/api/users/",
@@ -62,7 +53,6 @@ export const newUser = function (login, password) {
       { withCredentials: true }
     )
     .then(function (response) {
-      console.log(response.data)
       return response.data
     })
 }
