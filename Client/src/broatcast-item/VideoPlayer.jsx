@@ -1,13 +1,11 @@
 import VideoJS from "../player/Video.jsx"
 import { useRef, useParams } from "react"
 
-export const VideoPlayer = (login) => {
+export const VideoPlayer = ({ login }) => {
   const playerRef = useRef(null)
-  // const { login } = useParams()
 
   const handlePlayerReady = (player) => {
     playerRef.current = player
-
     player.on("waiting", () => {
       console.log("player is waiting")
     })
@@ -16,6 +14,7 @@ export const VideoPlayer = (login) => {
       console.log("player will dispose")
     })
   }
+
   const videoJsOptions = {
     autoplay: false,
     controls: true,

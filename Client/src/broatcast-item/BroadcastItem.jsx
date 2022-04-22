@@ -1,46 +1,44 @@
 import css from "./BroadcastItem.module.css"
-import { useParams } from "react-router-dom"
-import { useSelector } from "react-redux"
-import { Header } from "../shared/header/Header"
-import { Info } from "./Info.jsx"
+//Components
 import { Chat } from "./Chat"
+import { Info } from "./Info.jsx"
+import { Header } from "../shared/header/Header"
 import { VideoPlayer } from "./VideoPlayer"
-import { useFetching } from "../hooks/useFetching"
-import StreamService from "../API/streamService"
-
-import { useEffect, useState } from "react"
-// const data = streams.filter((stream) => stream.username === login)
+//API
+import { useParams } from "react-router-dom"
+import { streamsAPI } from "../API/streamsService"
 
 export const BroadcastItem = () => {
   const { login } = useParams()
-  const [streamItem, setStreamItem] = useState(null)
-  const [fetching, loading, error] = useFetching(async () => {
-    const stream = await StreamService.getStreamItem(login)
-    setStreamItem(stream)
-  })
 
-  useEffect(() => {
-    fetching()
-  }, [])
+  const {
+    data: stream,
+    isLoading,
+    error,
+  } = streamsAPI.useFetchStreamItemQuery(login)
 
   return (
     <>
       <Header />
       <div className={css.container}>
-        {loading ? (
-          <h1>LOADING</h1>
-        ) : (
-          <div>
-            <div className={css.broadcastItem}></div>
-            <VideoPlayer login={login} />
-            <Info data={streamItem} />
-            <div className={css.about}>
-              <hr />
-              <h2>A few words about this channel</h2>
+        {isLoading && <h1>LOADING</h1>}
+        {error && <h1>{error}</h1>}
+        {stream ? (
+          <>
+            <div>
+              <div className={css.broadcastItem}></div>
+              <VideoPlayer login={login} />
+              <Info data={stream} />
+              <div className={css.about}>
+                <hr />
+                <h2>A few words about this channel</h2>
+              </div>
             </div>
-          </div>
+            <Chat />
+          </>
+        ) : (
+          <></>
         )}
-        <Chat />
       </div>
     </>
   )

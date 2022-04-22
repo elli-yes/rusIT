@@ -1,7 +1,6 @@
 import css from "./BroadcastItem.module.css"
 
 export const Info = ({ data }) => {
-  console.log(data)
   return (
     <>
       <div className={css.info}>

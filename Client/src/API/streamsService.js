@@ -12,7 +12,7 @@ export const streamsAPI = createApi({
     }),
     fetchStreamItem: build.query({
       query: (username) => ({
-        url: `/streams/${username}`,
+        url: `/stream/${username}`,
       }),
     }),
   }),
