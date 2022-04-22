@@ -1,47 +1,32 @@
 import css from "./Broadcasts.module.css"
-import { useState, useEffect, useMemo } from "react"
-import { useSelector } from "react-redux"
-import { MySelect } from "../shared/select/MySelect"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { PlayerBox } from "./PlayerBox"
-import { Header } from "../shared/header/Header.jsx"
 import defImg from "../shared/assets/thumb.png"
-import { useGetStreams } from "../shared/hooks/useStreams"
+import { MySelect } from "../shared/select/MySelect"
+import { Header } from "../shared/header/Header.jsx"
+import { useStreams } from "./useStreams"
+import { fetchStreams } from "../app/stream/streamsActionCreator"
+import { streamsAPI } from "../API/streamsService"
+import { Streams } from "./Streams"
 
 export const Broadcasts = () => {
-  const streams = useSelector((state) => state.streamers.streamers)
-  // const [streams, setStreams] = useState([])
+  const {
+    data: streams,
+    isLoading,
+    error,
+  } = streamsAPI.useFetchAllStreamsQuery("")
+
   const [selectedSort, setSort] = useState("status")
   const [searchQuerry, setSearchQuerry] = useState("")
+  const [ssStreams, setSsStreams] = useState([])
 
-  const { data, loading, request, success } = useGetStreams()
-
-  // useEffect(() => {
-  //   request()
-  // }, [])
-
-  // useEffect(() => {
-  //   setStreams(data)
-  // }, [success])
-
-  const sortedStreams = useMemo(() => {
-    if (selectedSort === "status") {
-      return [...streams].sort((a, b) =>
-        a[selectedSort] > b[selectedSort] ? -1 : 1
-      )
-    } else {
-      return [...streams].sort((a, b) =>
-        a[selectedSort].localeCompare(b[selectedSort])
-      )
+  useEffect(() => {
+    if (streams) {
+      setSsStreams(useStreams(streams, selectedSort, searchQuerry))
     }
-  }, [selectedSort, streams])
+  }, [streams])
 
-  const sortedAndSearched = useMemo(() => {
-    return sortedStreams.filter(
-      (stream) =>
-        stream.title.toLowerCase().includes(searchQuerry.toLowerCase()) ||
-        stream.login.toLowerCase().includes(searchQuerry.toLowerCase())
-    )
-  }, [searchQuerry, sortedStreams])
   const sortStreams = (sort) => {
     setSort(sort)
   }
@@ -59,19 +44,10 @@ export const Broadcasts = () => {
             { value: "title", name: "Sort by stream" },
           ]}
         />
-        {sortedAndSearched.length != 0 ? (
-          sortedAndSearched.map((stream) => {
-            console.log(stream.thumb)
-            return (
-              <PlayerBox
-                key={stream.login}
-                login={stream.login}
-                title={stream.title}
-                status={stream.status}
-                thumb={defImg}
-              />
-            )
-          })
+        {isLoading && <h1>LOADING</h1>}
+        {error && <h1>ERR{error}</h1>}
+        {ssStreams.length > 0 ? (
+          <Streams streams={ssStreams} />
         ) : (
           <h1>No one streaming now, maybe you'l be a new stream Star?</h1>
         )}
@@ -79,3 +55,12 @@ export const Broadcasts = () => {
     </>
   )
 }
+// console.log("STR", ld, str)
+// const dispatch = useDispatch()
+// const { streams, isLoading, errors } = useSelector(
+//   (state) => state.streamsReducer
+// )
+
+// useEffect(() => {
+//   dispatch(fetchStreams())
+// }, [])
