@@ -1,32 +1,31 @@
 import "./App.css"
 import { useEffect } from "react"
 import { MainRouter } from "./router/MainRouter"
-import { useRefresh } from "./shared/hooks/useRefresh"
-import { authStore } from "./app/storeMobx"
-import { observer } from "mobx-react-lite"
+import { authAPI } from "./API/authService"
+import { useDispatch } from "react-redux"
+import { setCredentials } from "./app/authSlice"
 
-const App = observer(() => {
-  const { data, loading, request, success } = useRefresh()
+const App = () => {
+  const [refresh, { data, isLoading, isSuccess }] = authAPI.useRefreshMutation()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    request()
+    refresh()
   }, [])
 
   useEffect(() => {
-    if (success) {
-      if (data) {
-        authStore.isAuthenticated = true
-      }
+    if (isSuccess) {
+      dispatch(setCredentials({ token: data.access_token }))
     }
-  }, [success])
+  }, [isSuccess])
 
-  if (loading) return null
+  if (isLoading) return null
   else
     return (
       <div className="App">
         <MainRouter />
       </div>
     )
-})
+}
 
 export default App

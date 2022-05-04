@@ -2,8 +2,6 @@ import { useState, useEffect } from "react"
 import { Button } from "../shared/button/Button"
 import { Input } from "../shared/Input/Input"
 import css from "./Settings.module.css"
-import { login } from "./netManager"
-import { useLogin } from "../shared/hooks/useLogin"
 import { useNewUser } from "../shared/hooks/useNewUser"
 import { authAPI } from "../API/authService"
 import { useDispatch } from "react-redux"
@@ -18,13 +16,17 @@ export const Authorization = ({ auth }) => {
 
   const [login, { data: dataL, isLoading: isLoadingL }] =
     authAPI.useLoginMutation()
+
+  const [createUser, { data: dataReg, isLoading: isLoadingReg, isSuccess }] =
+    authAPI.useCreateUserMutation()
+
   const dispatch = useDispatch()
-  const reg = useNewUser()
+  // const reg = useNewUser()
 
   useEffect(() => {
     if (dataL) {
       // console.log(dataL)
-      dispatch(setCredentials({ token: dataL.acess_token }))
+      dispatch(setCredentials({ token: dataL.access_token }))
       auth()
     }
   }, [dataL])
@@ -82,10 +84,10 @@ export const Authorization = ({ auth }) => {
             className={css.form}
             onSubmit={(e) => {
               e.preventDefault()
-              reg.request(usernameR, passR)
+              createUser({ username: usernameR, password: passR })
             }}
           >
-            {reg.success ? (
+            {isSuccess ? (
               <>
                 <h3>Successfully registered, please login</h3>
                 <Button

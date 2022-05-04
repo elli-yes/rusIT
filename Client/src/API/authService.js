@@ -7,7 +7,7 @@ export const authAPI = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token
       if (token) {
-        headers.set("authentication", `Bearer ${token}`)
+        headers.set("Authorization", `Bearer ${token}`)
       }
       return headers
     },
@@ -25,6 +25,20 @@ export const authAPI = createApi({
     logout: build.mutation({
       query: () => ({
         url: `/logout`,
+        method: "POST",
+        credentials: "include",
+      }),
+    }),
+    createUser: build.mutation({
+      query: (acc) => ({
+        url: `/users`,
+        method: "POST",
+        body: acc,
+      }),
+    }),
+    refresh: build.mutation({
+      query: () => ({
+        url: `/refresh-tokens`,
         method: "POST",
         credentials: "include",
       }),
