@@ -7,10 +7,13 @@ import { Password } from "./Password"
 import { AccountInfo } from "./AccountInfo"
 import { observer } from "mobx-react-lite" // Or "mobx-react".
 import { authStore } from "../app/storeMobx.js"
-import { logout } from "./netManager"
+import { authAPI } from "../API/authService"
 
 export const SettingsRouter = observer(() => {
   const [isAuth, setAuth] = useState(authStore.isAuthenticated)
+
+  const [logout, { data, isLoading }] = authAPI.useLogoutMutation()
+
   useEffect(() => {
     setAuth(authStore.isAuthenticated)
   }, [authStore.isAuthenticated])

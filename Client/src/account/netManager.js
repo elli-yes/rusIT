@@ -1,20 +1,20 @@
 import axios from "axios"
 
-export const login = function (login, password) {
-  return axios
-    .post(
-      "http://localhost:8000/api/login",
-      {
-        username: login,
-        password: password,
-      },
-      { withCredentials: true }
-    )
-    .then(function (response) {
-      axios.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`
-      return response.data
-    })
-}
+// export const login = function (login, password) {
+//   return axios
+//     .post(
+//       "http://localhost:8000/api/login",
+//       {
+//         username: login,
+//         password: password,
+//       },
+//       { withCredentials: true }
+//     )
+//     .then(function (response) {
+//       axios.defaults.headers.common.Authorization = `Bearer ${response.data.access_token}`
+//       return response.data
+//     })
+// }
 export const logout = function () {
   return axios
     .post("http://localhost:8000/api/logout", {}, { withCredentials: true })

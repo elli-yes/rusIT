@@ -5,25 +5,29 @@ import css from "./Settings.module.css"
 import { login } from "./netManager"
 import { useLogin } from "../shared/hooks/useLogin"
 import { useNewUser } from "../shared/hooks/useNewUser"
+import { authAPI } from "../API/authService"
+import { useDispatch } from "react-redux"
+import { setCredentials } from "../app/authSlice"
 
-export const Authorization = ({ variant, auth }) => {
+export const Authorization = ({ auth }) => {
   const [username, setUsername] = useState("")
   const [pass, setPass] = useState("")
   const [usernameR, setUsernameR] = useState("")
   const [passR, setPassR] = useState("")
   const [sign, setSign] = useState(1)
 
-  // const [] = useState()
-
-  const { data, loading, request } = useLogin()
+  const [login, { data: dataL, isLoading: isLoadingL }] =
+    authAPI.useLoginMutation()
+  const dispatch = useDispatch()
   const reg = useNewUser()
 
   useEffect(() => {
-    if (data) {
-      console.log(data)
+    if (dataL) {
+      // console.log(dataL)
+      dispatch(setCredentials({ token: dataL.acess_token }))
       auth()
     }
-  }, [data])
+  }, [dataL])
 
   // useEffect(() => {
   //   if (reg.data) {
@@ -34,7 +38,7 @@ export const Authorization = ({ variant, auth }) => {
   function switchSign() {
     sign ? setSign(0) : setSign(1)
   }
-  return loading ? (
+  return isLoadingL ? (
     <h1>LOADING</h1>
   ) : (
     <>
@@ -45,7 +49,8 @@ export const Authorization = ({ variant, auth }) => {
             className={css.form}
             onSubmit={(e) => {
               e.preventDefault()
-              request(username, pass)
+              login({ username, password: pass })
+              // request(username, pass)
             }}
           >
             <h3>Login</h3>

@@ -1,14 +1,12 @@
 import css from "./Broadcasts.module.css"
-import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { PlayerBox } from "./PlayerBox"
-import defImg from "../shared/assets/thumb.png"
-import { MySelect } from "../shared/select/MySelect"
+//Components
 import { Header } from "../shared/header/Header.jsx"
-import { useStreams } from "./useStreams"
-import { fetchStreams } from "../app/stream/streamsActionCreator"
-import { streamsAPI } from "../API/streamsService"
+import { MySelect } from "../shared/select/MySelect"
 import { Streams } from "./Streams"
+//API
+import { useState, useEffect } from "react"
+import { useStreams } from "./useStreams"
+import { streamsAPI } from "../API/streamsService"
 
 export const Broadcasts = () => {
   const {
@@ -55,12 +53,3 @@ export const Broadcasts = () => {
     </>
   )
 }
-// console.log("STR", ld, str)
-// const dispatch = useDispatch()
-// const { streams, isLoading, errors } = useSelector(
-//   (state) => state.streamsReducer
-// )
-
-// useEffect(() => {
-//   dispatch(fetchStreams())
-// }, [])

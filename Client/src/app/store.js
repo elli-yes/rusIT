@@ -1,13 +1,17 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import streamsReducer from "./stream/streamsSlice"
-import { streamsAPI } from "../API/streamsService.js"
+import { streamsAPI } from "../API/streamsService"
+import { authAPI } from "../API/authService"
+import auth from "./authSlice"
 
 const rootReducer = combineReducers({
-  streamsReducer,
   [streamsAPI.reducerPath]: streamsAPI.reducer,
+  [authAPI.reducerPath]: authAPI.reducer,
+  auth,
 })
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(streamsAPI.middleware),
+    getDefaultMiddleware()
+      .concat(streamsAPI.middleware)
+      .concat(authAPI.middleware),
 })
