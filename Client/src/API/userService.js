@@ -19,7 +19,6 @@ export const userAPI = createApi({
         url: `/users/me`,
       }),
     }),
-
     logout: build.mutation({
       query: () => ({
         url: `/logout`,

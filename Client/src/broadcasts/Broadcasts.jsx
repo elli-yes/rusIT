@@ -13,9 +13,9 @@ export const Broadcasts = () => {
     data: streams,
     isLoading,
     error,
-  } = streamsAPI.useFetchAllStreamsQuery("")
+  } = streamsAPI.useFetchAllStreamsQuery()
 
-  const [selectedSort, setSort] = useState("status")
+  const [selectedSort, setSort] = useState("username")
   const [searchQuerry, setSearchQuerry] = useState("")
   const [ssStreams, setSsStreams] = useState([])
 
@@ -23,7 +23,7 @@ export const Broadcasts = () => {
     if (streams) {
       setSsStreams(useStreams(streams, selectedSort, searchQuerry))
     }
-  }, [streams])
+  }, [streams, selectedSort, searchQuerry])
 
   const sortStreams = (sort) => {
     setSort(sort)
@@ -36,10 +36,10 @@ export const Broadcasts = () => {
         <MySelect
           value={selectedSort}
           onChange={sortStreams}
-          defaultValue="Sort by online"
+          // defaultValue="Sort by online"
           options={[
-            { value: "login", name: "Sort by name" },
-            { value: "title", name: "Sort by stream" },
+            { value: "username", name: "Sort by name" },
+            { value: "stream_title", name: "Sort by stream" },
           ]}
         />
         {isLoading && <h1>LOADING</h1>}

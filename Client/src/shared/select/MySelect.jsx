@@ -8,7 +8,7 @@ export const MySelect = ({ options, defaultValue, value, onChange }) => {
         onChange={(event) => onChange(event.target.value)}
         className={css.select}
       >
-        <option value="status">{defaultValue}</option>
+        {/* <option value="status">{defaultValue}</option> */}
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.name}
