@@ -2,17 +2,12 @@ import { Button } from "../shared/button/Button"
 import css from "./Settings.module.css"
 import { useEffect, useState } from "react"
 import { userAPI } from "../API/userService"
+import { authAPI } from "../API/authService"
 
-import { useUsersMe } from "../shared/hooks/useUsersMe"
-import { observer } from "mobx-react-lite" // Or "mobx-react".
-import { userStore } from "../app/storeMobx"
-
-export const AccountInfo = ({ variant, auth }) => {
-  // const [user, setUser] = useState(userStore)
-  // const { data, error, loading, request, success } = useUsersMe()
-
+export const AccountInfo = () => {
   const { data, isLoading, error, isSuccess } =
     userAPI.useFetchCurrentUserQuery()
+  const [logout, { data: auth, isLoading: isA }] = authAPI.useLogoutMutation()
 
   // useEffect(() => {
   //   request()
@@ -20,16 +15,16 @@ export const AccountInfo = ({ variant, auth }) => {
 
   // userStore = data
 
-  // useEffect(() => {
-  //   setUser(userStore)
-  // }, [userStore])
+  useEffect(() => {
+    isSuccess ? console.log(data) : console.log()
+  }, [isSuccess])
   return (
     <>
       <h2>Account</h2>
       <div className={css.container}>
         {isSuccess ? <h2>Hello, {data.username} !</h2> : <h2>Hello!</h2>}
 
-        <Button onClick={auth} children={"Log out"} variant={"exit"} />
+        <Button onClick={logout} children={"Log out"} variant={"exit"} />
       </div>
     </>
   )

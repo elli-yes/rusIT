@@ -3,8 +3,19 @@ import { Button } from "../shared/button/Button"
 import { Header } from "../shared/header/Header"
 import VideoJS from "../player/Video.jsx"
 import css from "./Channel.module.css"
+import { userAPI } from "../API/userService"
+import { useEffect, useState } from "react"
 
 export const Channel = ({ variant }) => {
+  const { data, isLoading, error } = userAPI.useFetchCurrentUserQuery()
+  const [streamTitle, setStreamTitle] = useState("")
+  useEffect(() => {
+    console.log(data)
+    if (data) {
+      setStreamTitle(data.stream_title)
+    }
+  }, [data])
+
   const videoJsOptions = {
     autoplay: false,
     controls: true,
@@ -44,7 +55,11 @@ export const Channel = ({ variant }) => {
           <div className={css.about}>
             <hr />
             <span>Stream title:</span>
-            <Input />
+            <Input
+              placeholder={"Your stream title"}
+              value={streamTitle}
+              onChange={setStreamTitle}
+            />
           </div>
           <div className={css.about}>
             <hr />

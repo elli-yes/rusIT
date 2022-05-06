@@ -5,28 +5,24 @@ import { Login } from "./Login"
 import { Token } from "./Token"
 import { Password } from "./Password"
 import { AccountInfo } from "./AccountInfo"
-import { observer } from "mobx-react-lite" // Or "mobx-react".
-import { authStore } from "../app/storeMobx.js"
-import { authAPI } from "../API/authService"
+import { useSelector, useDispatch } from "react-redux"
 
-export const SettingsRouter = observer(() => {
-  const [isAuth, setAuth] = useState(authStore.isAuthenticated)
+export const SettingsRouter = () => {
+  const isAuth = useSelector((state) => state.token)
+  const dispatch = useDispatch()
 
-  const [logout, { data, isLoading }] = authAPI.useLogoutMutation()
+  // const [isAuth, setAuth] = useState(authStore.isAuthenticated)
 
-  useEffect(() => {
-    setAuth(authStore.isAuthenticated)
-  }, [authStore.isAuthenticated])
+  // useEffect(() => {
+  //   setAuth(authStore.isAuthenticated)
+  // }, [authStore.isAuthenticated])
 
-  function auth() {
-    if (authStore.isAuthenticated) {
+  function auth(data) {
+    if (isAuth) {
       logout()
-      authStore.isAuthenticated = 0
-    } else {
-      authStore.isAuthenticated = 1
+      dispatch(setCredentials({ token: null }))
     }
   }
-  console.log(authStore.isAuthenticated)
 
   if (isAuth)
     return (
@@ -43,4 +39,4 @@ export const SettingsRouter = observer(() => {
       <Route path="/*" element={<Navigate replace to="/account" />} />
     </Routes>
   )
-})
+}

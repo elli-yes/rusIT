@@ -3,8 +3,12 @@ import png from "./Frame4.png"
 import { Link } from "react-router-dom"
 import { SearchBar } from "./SearchBar"
 import { Button } from "../button/Button"
+import { useSelector } from "react-redux"
+import { useState } from "react"
 
 export const Header = ({ searchQuerry, setSearchQuerry }) => {
+  const isAuth = useSelector((state) => state.token)
+
   return (
     <div className={css.header}>
       <Link to="/">
@@ -14,9 +18,14 @@ export const Header = ({ searchQuerry, setSearchQuerry }) => {
         searchQuerry={searchQuerry}
         setSearchQuerry={setSearchQuerry}
       />
-      <Link to="/channel">
-        <Button children={"Channel"} variant={"confirm"} />
-      </Link>
+      {isAuth ? (
+        <Link to="/channel">
+          <Button children={"Channel"} variant={"confirm"} />
+        </Link>
+      ) : (
+        <></>
+      )}
+
       <Link to="/account">
         <Button children={"Profile"} />
       </Link>

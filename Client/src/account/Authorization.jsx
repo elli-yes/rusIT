@@ -6,6 +6,8 @@ import { useNewUser } from "../shared/hooks/useNewUser"
 import { authAPI } from "../API/authService"
 import { useDispatch } from "react-redux"
 import { setCredentials } from "../app/authSlice"
+import { SignIn } from "./SignIn"
+import { SignUp } from "./SignUp"
 
 export const Authorization = ({ auth }) => {
   const [username, setUsername] = useState("")
@@ -19,27 +21,10 @@ export const Authorization = ({ auth }) => {
 
   const [createUser, { data: dataReg, isLoading: isLoadingReg, isSuccess }] =
     authAPI.useCreateUserMutation()
-
-  const dispatch = useDispatch()
-  // const reg = useNewUser()
-
-  useEffect(() => {
-    if (dataL) {
-      // console.log(dataL)
-      dispatch(setCredentials({ token: dataL.access_token }))
-      auth()
-    }
-  }, [dataL])
-
-  // useEffect(() => {
-  //   if (reg.data) {
-  //     console.log(reg.data)
-  //     auth()
-  //   }
-  // }, [reg.data])
   function switchSign() {
     sign ? setSign(0) : setSign(1)
   }
+
   return isLoadingL ? (
     <h1>LOADING</h1>
   ) : (
@@ -47,83 +32,9 @@ export const Authorization = ({ auth }) => {
       <h2>Please log in</h2>
       <div className={css.containerLog}>
         {sign ? (
-          <form
-            className={css.form}
-            onSubmit={(e) => {
-              e.preventDefault()
-              login({ username, password: pass })
-              // request(username, pass)
-            }}
-          >
-            <h3>Login</h3>
-
-            <Input
-              placeholder={"Login"}
-              value={username}
-              onChange={setUsername}
-            />
-            <Input
-              type="password"
-              placeholder={"Password"}
-              value={pass}
-              onChange={setPass}
-            />
-            <div>
-              <Button type="submit" children={"Log in"} />
-              <span>or</span>
-              <Button
-                variant={"confirm"}
-                type="button"
-                children={"Registrarion"}
-                onClick={switchSign}
-              />
-            </div>
-          </form>
+          <SignIn switchSign={switchSign} />
         ) : (
-          <form
-            className={css.form}
-            onSubmit={(e) => {
-              e.preventDefault()
-              createUser({ username: usernameR, password: passR })
-            }}
-          >
-            {isSuccess ? (
-              <>
-                <h3>Successfully registered, please login</h3>
-                <Button
-                  variant={"confirm"}
-                  type="button"
-                  children={"Log in"}
-                  onClick={switchSign}
-                />
-              </>
-            ) : (
-              <>
-                <h3>Registration</h3>
-                <Input
-                  placeholder={"Login"}
-                  value={usernameR}
-                  onChange={setUsernameR}
-                />
-                <Input
-                  type="password"
-                  placeholder={"Password"}
-                  value={passR}
-                  onChange={setPassR}
-                />
-                <div>
-                  <Button type="submit" children={"Registration"} />
-                  <span>or</span>
-                  <Button
-                    variant={"confirm"}
-                    type="button"
-                    children={"Log in"}
-                    onClick={switchSign}
-                  />
-                </div>
-              </>
-            )}
-          </form>
+          <SignUp switchSign={switchSign} />
         )}
       </div>
     </>
