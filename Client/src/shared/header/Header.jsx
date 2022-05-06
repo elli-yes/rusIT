@@ -4,10 +4,9 @@ import { Link } from "react-router-dom"
 import { SearchBar } from "./SearchBar"
 import { Button } from "../button/Button"
 import { useSelector } from "react-redux"
-import { useState } from "react"
 
 export const Header = ({ searchQuerry, setSearchQuerry }) => {
-  const isAuth = useSelector((state) => state.token)
+  const isAuth = useSelector((state) => state.auth.token)
 
   return (
     <div className={css.header}>

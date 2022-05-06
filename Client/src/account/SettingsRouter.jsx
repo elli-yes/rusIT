@@ -4,7 +4,7 @@ import { Login } from "./Login"
 import { Token } from "./Token"
 import { Password } from "./Password"
 import { AccountInfo } from "./AccountInfo"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 
 export const SettingsRouter = () => {
   const isAuth = useSelector((state) => state.auth.token)
