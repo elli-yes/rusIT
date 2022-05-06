@@ -3,21 +3,22 @@ import css from "./Settings.module.css"
 import { useEffect, useState } from "react"
 import { userAPI } from "../API/userService"
 import { authAPI } from "../API/authService"
+import { useDispatch } from "react-redux"
+import { setCredentials } from "../app/authSlice"
 
 export const AccountInfo = () => {
+  const dispatch = useDispatch()
+
   const { data, isLoading, error, isSuccess } =
     userAPI.useFetchCurrentUserQuery()
-  const [logout, { data: auth, isLoading: isA }] = authAPI.useLogoutMutation()
 
-  // useEffect(() => {
-  //   request()
-  // }, [])
-
-  // userStore = data
+  const [logout, { data: auth, isSuccess: isExited }] =
+    authAPI.useLogoutMutation()
 
   useEffect(() => {
-    isSuccess ? console.log(data) : console.log()
-  }, [isSuccess])
+    if (isExited) dispatch(setCredentials({ token: null }))
+  }, [isExited])
+
   return (
     <>
       <h2>Account</h2>
