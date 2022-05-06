@@ -34,7 +34,7 @@ export const BroadcastItem = () => {
                 <h2>A few words about this channel</h2>
               </div>
             </div>
-            <Chat />
+            {/* <Chat /> */}
           </>
         ) : (
           <></>

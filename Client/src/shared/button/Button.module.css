@@ -5,12 +5,12 @@
   background-color: cornflowerblue;
   color: white;
   font-weight: bold;
-  margin-left: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
   position: relative;
+  margin: 0px 10px;
 }
 .info {
   background-color: white;

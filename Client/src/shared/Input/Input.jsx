@@ -1,6 +1,11 @@
 import css from "./Input.module.css"
 
-export const Input = ({ placeholder, value, onChange, type = "text" }) => {
+export const Input = ({
+  placeholder,
+  value,
+  onChange = () => {},
+  type = "text",
+}) => {
   return (
     <input
       type={type}

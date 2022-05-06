@@ -24,13 +24,6 @@ h2 {
   position: relative;
   animation: example 0.3s;
 }
-.form div {
-  display: flex;
-  justify-content: space-between;
-}
-.form * {
-  margin: 5px 0px;
-}
 @keyframes example {
   from {
     top: 200px;
@@ -40,4 +33,14 @@ h2 {
     top: 0px;
     opacity: 1;
   }
+}
+.row {
+  display: grid;
+  grid-template-columns: repeat();
+  margin: 10px 10px;
+}
+.row label {
+  font-size: 14px;
+  grid-column-start: 1;
+  grid-column-end: 4;
 }
