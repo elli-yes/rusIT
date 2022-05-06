@@ -19,7 +19,6 @@ export const Account = (props) => {
         <div className={css.left}>
           <VerticalMenu
             items={[
-              { link: "login", title: "Login" },
               { link: "password", title: "Password" },
               { link: "token", title: "Token" },
             ]}

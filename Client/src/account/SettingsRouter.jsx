@@ -1,6 +1,5 @@
 import { Route, Routes, Navigate } from "react-router-dom"
 import { Authorization } from "./Authorization"
-import { Login } from "./Login"
 import { Token } from "./Token"
 import { Password } from "./Password"
 import { AccountInfo } from "./AccountInfo"
@@ -13,7 +12,6 @@ export const SettingsRouter = () => {
     return (
       <Routes>
         <Route path="/" element={<AccountInfo />} />
-        <Route path="login" element={<Login />} />
         <Route path="password" element={<Password />} />
         <Route path="token" element={<Token />} />
       </Routes>
