@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux"
 import { setCredentials } from "../app/authSlice"
 import { SignIn } from "./SignIn"
 import { SignUp } from "./SignUp"
+import { Loader } from "../shared/loader/Loader"
 
 export const Authorization = ({ auth }) => {
   const [username, setUsername] = useState("")
@@ -26,10 +27,11 @@ export const Authorization = ({ auth }) => {
   }
 
   return isLoadingL ? (
-    <h1>LOADING</h1>
+    <Loader />
   ) : (
     <>
       <h2>Please log in</h2>
+      <Loader />
       <div className={css.containerLog}>
         {sign ? (
           <SignIn switchSign={switchSign} />
