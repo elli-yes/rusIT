@@ -5,6 +5,7 @@ export const Input = ({
   value,
   onChange = () => {},
   type = "text",
+  disabled = "",
 }) => {
   return (
     <input
@@ -13,6 +14,7 @@ export const Input = ({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       className={css.input}
+      disabled={disabled}
     />
   )
 }

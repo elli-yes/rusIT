@@ -5,6 +5,8 @@ import { useState } from "react"
 
 export const Password = () => {
   const [show, setShow] = useState({ np: 0, npc: 0, op: 0 })
+  const [newPass, setNewPass] = useState("")
+  const [newPassRep, setNewPassRep] = useState("")
 
   function doShow(field) {
     setShow((show) => ({ ...show, [field]: !show[field] }))
@@ -13,11 +15,13 @@ export const Password = () => {
   return (
     <div className="container">
       <h1>Password edit</h1>
-      <span>NOTE: don't forget to save it</span>
+      <span>NOTE: don't forget to saPauseve it</span>
       <form className={css.form} action="">
         <div className={css.row}>
           <label>New password</label>
           <Input
+            value={newPass}
+            onChange={setNewPass}
             type={show.np ? "text" : "password"}
             placeholder={"New password"}
           />
@@ -33,6 +37,8 @@ export const Password = () => {
           <label>Repeat password</label>
 
           <Input
+            value={newPassRep}
+            onChange={setNewPassRep}
             type={show.npc ? "text" : "password"}
             placeholder={"Repeat password"}
           />
@@ -59,8 +65,11 @@ export const Password = () => {
             children={show.op ? "Hide" : "Show"}
           />
         </div>
-
-        <Button children={"Change"} />
+        {newPass === newPassRep ? (
+          <Button onClick={() => {}} children={"Change"} />
+        ) : (
+          <h3 style={{ color: "red" }}>Passwords not same</h3>
+        )}
       </form>
     </div>
   )
