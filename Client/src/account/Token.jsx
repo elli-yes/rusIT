@@ -16,11 +16,16 @@ export const Token = () => {
       <form className={css.form} action="">
         <div className={css.row}>
           <label>Your stream token</label>
-          <Input
-            value={data.key}
-            type={show ? "text" : "password"}
-            placeholder={"Token"}
-          />
+          {isSuccess ? (
+            <Input
+              value={data.key}
+              type={show ? "text" : "password"}
+              placeholder={"Token"}
+            />
+          ) : (
+            <h3>Server error</h3>
+          )}
+
           <Button
             onClick={(e) => {
               e.preventDefault()
