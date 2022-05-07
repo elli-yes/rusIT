@@ -26,5 +26,13 @@ export const userAPI = createApi({
         credentials: "include",
       }),
     }),
+    setTitle: build.mutation({
+      query: (title) => ({
+        url: `/set_title`,
+        method: "POST",
+        body: title,
+        credentials: "include",
+      }),
+    }),
   }),
 })

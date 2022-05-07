@@ -15,6 +15,8 @@ export const SignIn = ({ switchSign }) => {
   const [username, setUsername] = useState("")
   const [pass, setPass] = useState("")
 
+  const [show, setShow] = useState(false)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -38,12 +40,23 @@ export const SignIn = ({ switchSign }) => {
         {isError ? <h3 style={{ color: "red" }}>Failed</h3> : <></>}
 
         <Input placeholder={"Login"} value={username} onChange={setUsername} />
-        <Input
-          type="password"
-          placeholder={"Password"}
-          value={pass}
-          onChange={setPass}
-        />
+        <div className={css.row}>
+          <label>Password</label>
+          <Input
+            type={show ? "text" : "password"}
+            placeholder={"Password"}
+            value={pass}
+            onChange={setPass}
+          />
+          <Button
+            onClick={(e) => {
+              e.preventDefault()
+              setShow(!show)
+            }}
+            children={show ? "Hide" : "Show"}
+          />
+        </div>
+
         <div>
           <Button type="submit" children={"Log in"} />
           <span>or</span>

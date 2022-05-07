@@ -1,19 +1,45 @@
 import css from "./Settings.module.css"
 import { Input } from "../shared/Input/Input"
 import { Button } from "../shared/button/Button"
+import { useState } from "react"
+import { userAPI } from "../API/userService"
 
-export const Token = ({ variant }) => {
+export const Token = () => {
+  const [show, setShow] = useState(false)
+  const { data, isLoading, error, isSuccess } =
+    userAPI.useFetchCurrentUserQuery()
+
   return (
     <div className="container">
       <h1>Token edit</h1>
-      <span>
-        NOTE: if you change login, your folowers can lose you. And don't forget
-        to change OBS stream settings
-      </span>
+      <span>NOTE: don't show your token anybody</span>
       <form className={css.form} action="">
-        <Input placeholder={"Old token"} />
-        <Input placeholder={"New token"} />
-        <Button children={"Change"} />
+        <div className={css.row}>
+          <label>Your stream token</label>
+          {isSuccess ? (
+            <Input
+              value={data.key}
+              type={show ? "text" : "password"}
+              placeholder={"Token"}
+            />
+          ) : (
+            <h3>Server error</h3>
+          )}
+
+          <Button
+            onClick={(e) => {
+              e.preventDefault()
+              setShow(!show)
+            }}
+            children={show.np ? "Hide" : "Show"}
+          />
+        </div>
+        <Button
+          onClick={(e) => {
+            e.preventDefault()
+          }}
+          children={"Generate new"}
+        />
       </form>
     </div>
   )
