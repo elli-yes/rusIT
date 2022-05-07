@@ -9,6 +9,7 @@ import { useEffect, useState } from "react"
 export const Channel = ({ variant }) => {
   const { data, isLoading, error } = userAPI.useFetchCurrentUserQuery()
   const [streamTitle, setStreamTitle] = useState("")
+
   useEffect(() => {
     console.log(data)
     if (data) {
