@@ -82,7 +82,7 @@ async def get_current_user(req: Request):
                 detail="Invalid authentication credentials"
             )
 
-        return user
+        return schemas.User_DB(**user)
     except BaseException:
         raise HTTPException(status_code=401, detail='Not authorized')
 
@@ -199,8 +199,8 @@ async def auth(request: Request, db: Session = Depends(get_db)):
 
 
 @app.post('/api/set_title')
-def set_title(user: schemas.User_out = Depends(get_current_user), title: str = Body(...), db: Session = Depends(get_db)):
-    return crud.update_stream_title(db, username=user.username, title=title)
+def set_title(user: schemas.User_out = Depends(get_current_user), title: schemas.Stream = Body(...), db: Session = Depends(get_db)):
+    return crud.update_stream_title(db, username=user.username, title=title.stream_title)
 
 
 @app.get('/api/stream/{username}', response_model=schemas.Stream_out)
