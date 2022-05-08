@@ -198,10 +198,19 @@ async def auth(request: Request, db: Session = Depends(get_db)):
     return Response(status_code=200)
 
 
+@app.post('/api/create_new_uuid')
+async def new_uuid(user: schemas.User_out = Depends(get_current_user), db: Session = Depends(get_db)):
+    return crud.create_new_uuid(db,user.username)
+
+
 @app.post('/api/set_title')
 def set_title(user: schemas.User_out = Depends(get_current_user), title: schemas.Stream = Body(...), db: Session = Depends(get_db)):
     return crud.update_stream_title(db, username=user.username, title=title.stream_title)
 
+
+@app.post('/api/set_description')
+def set_desc(user: schemas.User_out = Depends(get_current_user), description: schemas.Description = Body(...), db: Session = Depends(get_db)):
+    return crud.update_username_desc(db,user.username,description.description)
 
 @app.get('/api/stream/{username}', response_model=schemas.Stream_out)
 def get_stream_by_username(username: str, db: Session = Depends(get_db)):

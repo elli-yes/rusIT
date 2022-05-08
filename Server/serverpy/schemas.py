@@ -1,10 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, constr
 
 
 class UserIn(BaseModel):
-    username: str
-    password: str
-
+    username: constr(min_length=6)
+    password: constr(min_length=6)
 
 class User_out(BaseModel):
     id: int
@@ -12,6 +11,7 @@ class User_out(BaseModel):
     key: str
     stream_title: str
     is_active: int
+    description: str
 
     class Config:
         orm_mode = True
@@ -24,6 +24,7 @@ class User_DB(User_out):
 class Stream_out(BaseModel):
     username: str
     stream_title: str
+    description: str
 
     class Config:
         orm_mode = True
@@ -35,3 +36,6 @@ class RefreshTokens(BaseModel):
 
 class Stream(BaseModel):
     stream_title: str
+
+class Description(BaseModel):
+    description: str

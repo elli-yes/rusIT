@@ -35,6 +35,24 @@ def update_stream_title(db: Session, username: str, title: str):
     return user
 
 
+def update_username_desc(db: Session, username: str, description: str):
+    user = db.query(models.User).filter(
+        models.User.username == username).first()
+    user.description = description
+    db.commit()
+    db.refresh(user)
+    return user
+
+
+def create_new_uuid(db: Session, username: str):
+    user = db.query(models.User).filter(
+        models.User.username == username).first()
+    user.key = str(uuid4())
+    db.commit()
+    db.refresh(user)
+    return user
+
+
 def set_user_inactive(db: Session, username: str):
     user = db.query(models.User).filter(
         models.User.username == username).first()

@@ -12,6 +12,7 @@ class User(Base):
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     key = Column(String)
+    description = Column(String, default="")
     stream_title = Column(String, default="")
     is_active = Column(Integer, default=0)
 
