@@ -12,10 +12,10 @@ export const Token = () => {
   const [generateToken, {}] = userAPI.useGenerateTokenMutation()
 
   return (
-    <div className="container">
+    <div className={css.container}>
+      <div className={css.title}>Token edit</div>
+      <span>NOTE: don't show your token anybody</span>
       <form className={css.form} action="">
-        <div className={css.title}>Token edit</div>
-        <div>NOTE: don't show your token anybody</div>
         <div className={css.block}>
           <label>Your stream token</label>
           <div className={css.row}>

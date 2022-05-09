@@ -10,7 +10,7 @@
   align-items: center;
   border: none;
   position: relative;
-  margin: 0px 10px;
+  /* margin: 0px 10px; */
 }
 .info {
   background-color: white;

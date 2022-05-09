@@ -13,63 +13,72 @@ export const Password = () => {
   }
 
   return (
-    <div className="container">
-      <h1>Password edit</h1>
-      <span>NOTE: don't forget to saPauseve it</span>
+    <div className={css.container}>
+      <div className={css.title}>Password edit</div>
+      <span>NOTE: don't forget to save it</span>
+
       <form className={css.form} action="">
-        <div className={css.row}>
+        <div className={css.block}>
           <label>New password</label>
-          <Input
-            value={newPass}
-            onChange={setNewPass}
-            type={show.np ? "text" : "password"}
-            placeholder={"New password"}
-          />
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              doShow("np")
-            }}
-            children={show.np ? "Hide" : "Show"}
-          />
+
+          <div className={css.row}>
+            <Input
+              value={newPass}
+              onChange={setNewPass}
+              type={show.np ? "text" : "password"}
+              placeholder={"..."}
+            />
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                doShow("np")
+              }}
+              children={show.np ? "Hide" : "Show"}
+            />
+          </div>
         </div>
-        <div className={css.row}>
+
+        <div className={css.block}>
           <label>Repeat password</label>
 
-          <Input
-            value={newPassRep}
-            onChange={setNewPassRep}
-            type={show.npc ? "text" : "password"}
-            placeholder={"Repeat password"}
-          />
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              doShow("npc")
-            }}
-            children={show.npc ? "Hide" : "Show"}
-          />
+          <div className={css.row}>
+            <Input
+              value={newPassRep}
+              onChange={setNewPassRep}
+              type={show.npc ? "text" : "password"}
+              placeholder={"..."}
+            />
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                doShow("npc")
+              }}
+              children={show.npc ? "Hide" : "Show"}
+            />
+          </div>
         </div>
-        <div className={css.row}>
+
+        <div className={css.block}>
           <label>Old password</label>
 
-          <Input
-            type={show.op ? "text" : "password"}
-            placeholder={"Old password"}
-          />
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              doShow("op")
-            }}
-            children={show.op ? "Hide" : "Show"}
-          />
+          <div className={css.row}>
+            <Input type={show.op ? "text" : "password"} placeholder={"..."} />
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                doShow("op")
+              }}
+              children={show.op ? "Hide" : "Show"}
+            />
+          </div>
         </div>
-        {newPass === newPassRep ? (
-          <Button onClick={() => {}} children={"Change"} />
-        ) : (
-          <h3 style={{ color: "red" }}>Passwords not same</h3>
-        )}
+        <div className={css.block}>
+          {newPass === newPassRep ? (
+            <Button variant={"exit"} onClick={() => {}} children={"Change"} />
+          ) : (
+            <h3 style={{ color: "red" }}>Passwords not same</h3>
+          )}
+        </div>
       </form>
     </div>
   )
