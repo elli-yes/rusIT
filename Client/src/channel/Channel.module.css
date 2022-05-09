@@ -1,6 +1,6 @@
-.container span {
+/* .container span {
   display: block;
-}
+} */
 .container {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -10,5 +10,26 @@
   border: solid 2px lightskyblue;
   /* width: 50%; */
 }
-.info {
+.tip {
+  background-color: teal;
+  color: white;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: large;
+  animation: saved 2s;
+  opacity: 0;
+}
+.none {
+  display: none;
+}
+@keyframes saved {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

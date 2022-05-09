@@ -10,7 +10,8 @@ import { Loader } from "../shared/loader/Loader"
 
 export const Channel = ({ variant }) => {
   const { data, isSuccess } = userAPI.useFetchCurrentUserQuery()
-  const [setTitle, {}] = userAPI.useSetTitleMutation()
+  const [setTitle, { isSuccess: isSuccessTitle }] =
+    userAPI.useSetTitleMutation()
   const [setDescription, { isSuccess: isSuccessDesc }] =
     userAPI.useSetDescriptionMutation()
   const [streamTitle, setStreamTitle] = useState("")
@@ -41,6 +42,7 @@ export const Channel = ({ variant }) => {
           <div className={css.about}>
             <hr />
             <span>Stream title:</span>
+            <span className={isSuccessTitle ? css.tip : css.none}>Saved</span>
             <Input
               placeholder={"Your stream title"}
               value={streamTitle}
@@ -58,6 +60,8 @@ export const Channel = ({ variant }) => {
             <span>Channel description:</span>
             <hr />
             <span>Stream title:</span>
+            <span className={isSuccessDesc ? css.tip : css.none}>Saved</span>
+
             <textarea
               value={streamDescription}
               onChange={(e) => setStreamDescription(e.target.value)}
@@ -65,7 +69,6 @@ export const Channel = ({ variant }) => {
               cols="30"
               rows="10"
             ></textarea>
-            {isSuccessDesc ? <span>Saved</span> : <></>}
             <Button
               children={"Save"}
               onClick={() => {
