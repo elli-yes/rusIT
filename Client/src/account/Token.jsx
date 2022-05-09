@@ -9,6 +9,8 @@ export const Token = () => {
   const { data, isLoading, error, isSuccess } =
     userAPI.useFetchCurrentUserQuery()
 
+  const [generateToken, {}] = userAPI.useGenerateTokenMutation()
+
   return (
     <div className="container">
       <h1>Token edit</h1>
@@ -36,7 +38,7 @@ export const Token = () => {
         </div>
         <Button
           onClick={(e) => {
-            e.preventDefault()
+            generateToken()
           }}
           children={"Generate new"}
         />

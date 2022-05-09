@@ -18,12 +18,16 @@ export const AccountInfo = () => {
   useEffect(() => {
     if (isExited) dispatch(setCredentials({ token: null }))
   }, [isExited])
-
+  console.log(data, isLoading, isSuccess)
   return (
     <>
       <h2>Account</h2>
       <div className={css.container}>
-        {isSuccess ? <h2>Hello, {data.username} !</h2> : <h2>Hello!</h2>}
+        {isSuccess && !isLoading ? (
+          <h2>Hello, {data.username} !</h2>
+        ) : (
+          <h2>Hello!</h2>
+        )}
 
         <Button onClick={logout} children={"Log out"} variant={"exit"} />
       </div>

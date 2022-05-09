@@ -42,5 +42,12 @@ export const userAPI = createApi({
         credentials: "include",
       }),
     }),
+    generateToken: build.mutation({
+      query: () => ({
+        url: `/create_new_uuid`,
+        method: "POST",
+        credentials: "include",
+      }),
+    }),
   }),
 })
