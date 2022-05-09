@@ -34,5 +34,13 @@ export const userAPI = createApi({
         credentials: "include",
       }),
     }),
+    setDescription: build.mutation({
+      query: (desc) => ({
+        url: `/set_description`,
+        method: "POST",
+        body: { description: desc },
+        credentials: "include",
+      }),
+    }),
   }),
 })

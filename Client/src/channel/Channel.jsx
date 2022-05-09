@@ -9,12 +9,18 @@ import { useEffect, useState } from "react"
 export const Channel = ({ variant }) => {
   const { data, isLoading, error } = userAPI.useFetchCurrentUserQuery()
   const [setTitle, {}] = userAPI.useSetTitleMutation()
+  const [setDescription, { isSuccess: isSuccessDesc }] =
+    userAPI.useSetDescriptionMutation()
   const [streamTitle, setStreamTitle] = useState("")
+  const [streamDescription, setStreamDescription] = useState("")
+  const [status, setStatus] = useState(false)
 
   useEffect(() => {
     console.log(data)
     if (data) {
       setStreamTitle(data.stream_title)
+      setStreamDescription(data.description)
+      setStatus(data.is_active)
     }
   }, [data])
 
@@ -52,7 +58,7 @@ export const Channel = ({ variant }) => {
           <div className={css.about}>
             <hr />
             <span>Status:</span>
-            <div>RED</div>
+            {status ? <span>Online</span> : <span>Offline</span>}
           </div>
           <div className={css.about}>
             <hr />
@@ -65,14 +71,29 @@ export const Channel = ({ variant }) => {
             <Button
               children={"Save"}
               onClick={() => {
-                setTitle(streamTitle)
+                setTitle({ stream_title: streamTitle })
               }}
             />
           </div>
           <div className={css.about}>
             <hr />
             <span>Channel description:</span>
-            <textarea name="about" cols="30" rows="10"></textarea>
+            <hr />
+            <span>Stream title:</span>
+            <textarea
+              value={streamDescription}
+              onChange={(e) => setStreamDescription(e.target.value)}
+              name="about"
+              cols="30"
+              rows="10"
+            ></textarea>
+            {isSuccessDesc ? <span>Saved</span> : <></>}
+            <Button
+              children={"Save"}
+              onClick={() => {
+                setDescription(streamDescription)
+              }}
+            />
           </div>
         </div>
       </div>
