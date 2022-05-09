@@ -1,7 +1,7 @@
 import css from "./Settings.module.css"
 //API
 import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { authAPI } from "../API/authService"
 import { setCredentials } from "../app/authSlice"
 //Components
@@ -36,36 +36,47 @@ export const SignIn = ({ switchSign }) => {
           login({ username, password: pass })
         }}
       >
-        <h3>Login</h3>
-        {isError ? <h3 style={{ color: "red" }}>Failed</h3> : <></>}
-
-        <Input placeholder={"Login"} value={username} onChange={setUsername} />
-        <div className={css.row}>
-          <label>Password</label>
+        <div className={css.title}>Login</div>
+        <div className={css.block}>
+          <label>
+            Login
+            {isError ? <span style={{ color: "red" }}> failed</span> : <></>}
+          </label>
           <Input
-            type={show ? "text" : "password"}
-            placeholder={"Password"}
-            value={pass}
-            onChange={setPass}
-          />
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              setShow(!show)
-            }}
-            children={show ? "Hide" : "Show"}
+            placeholder={"Login"}
+            value={username}
+            onChange={setUsername}
           />
         </div>
-
-        <div>
-          <Button type="submit" children={"Log in"} />
-          <span>or</span>
-          <Button
-            variant={"confirm"}
-            type="button"
-            children={"Registrarion"}
-            onClick={switchSign}
-          />
+        <div className={css.block}>
+          <label>Password</label>
+          <div className={css.row}>
+            <Input
+              type={show ? "text" : "password"}
+              placeholder={"Password"}
+              value={pass}
+              onChange={setPass}
+            />
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                setShow(!show)
+              }}
+              children={show ? "Hide" : "Show"}
+            />
+          </div>
+        </div>
+        <div className={css.block}>
+          <div className={css.row}>
+            <Button type="submit" children={"Log in"} />
+            <span>or</span>
+            <Button
+              variant={"confirm"}
+              type="button"
+              children={"Registrarion"}
+              onClick={switchSign}
+            />
+          </div>
         </div>
       </form>
     )
