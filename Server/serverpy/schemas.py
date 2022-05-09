@@ -2,7 +2,7 @@ from pydantic import BaseModel, constr
 
 
 class UserIn(BaseModel):
-    username: constr(min_length=6)
+    username: constr(min_length=4)
     password: constr(min_length=6)
 
 class User_out(BaseModel):
