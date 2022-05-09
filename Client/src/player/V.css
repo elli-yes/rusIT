@@ -12,9 +12,8 @@
   color: cornflowerblue;
 }
 .vjs-has-started .vjs-control-bar {
-  background-color: transparent;
   justify-content: space-between;
-  transform: scale(1.5, 1.5);
+  color: cornflowerblue;
 
   padding: 0px 220px;
   padding-bottom: 50px;
