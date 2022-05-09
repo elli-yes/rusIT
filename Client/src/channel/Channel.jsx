@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 
 export const Channel = ({ variant }) => {
   const { data, isLoading, error } = userAPI.useFetchCurrentUserQuery()
+  const [setTitle, {}] = userAPI.useSetTitleMutation()
   const [streamTitle, setStreamTitle] = useState("")
 
   useEffect(() => {
@@ -60,6 +61,12 @@ export const Channel = ({ variant }) => {
               placeholder={"Your stream title"}
               value={streamTitle}
               onChange={setStreamTitle}
+            />
+            <Button
+              children={"Save"}
+              onClick={() => {
+                setTitle(streamTitle)
+              }}
             />
           </div>
           <div className={css.about}>
