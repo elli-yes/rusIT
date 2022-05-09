@@ -7,10 +7,15 @@ export const Info = ({ data }) => {
         <span>
           <div className={css.online}></div>
           <div className={css.username}>{data.username}</div>
+          <span> online at:</span>
         </span>
+
         <div className={css.stream_title}>{data.stream_title}</div>
       </div>
-      <div className={css.about}></div>
+      <div className={css.about}>
+        <h4>About channel:</h4>
+        <div>{data.description}</div>
+      </div>
     </>
   )
 }
