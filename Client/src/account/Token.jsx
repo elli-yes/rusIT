@@ -13,35 +13,41 @@ export const Token = () => {
 
   return (
     <div className="container">
-      <h1>Token edit</h1>
-      <span>NOTE: don't show your token anybody</span>
       <form className={css.form} action="">
-        <div className={css.row}>
+        <div className={css.title}>Token edit</div>
+        <div>NOTE: don't show your token anybody</div>
+        <div className={css.block}>
           <label>Your stream token</label>
-          {isSuccess ? (
-            <Input
-              value={data.key}
-              type={show ? "text" : "password"}
-              placeholder={"Token"}
-            />
-          ) : (
-            <h3>Server error</h3>
-          )}
-
+          <div className={css.row}>
+            {isSuccess ? (
+              <>
+                <Input
+                  value={data.key}
+                  type={show ? "text" : "password"}
+                  placeholder={"Token"}
+                />
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setShow(!show)
+                  }}
+                  children={show.np ? "Hide" : "Show"}
+                />
+              </>
+            ) : (
+              <h3>Server error</h3>
+            )}
+          </div>
+        </div>
+        <div className={css.block}>
           <Button
+            variant={"exit"}
             onClick={(e) => {
-              e.preventDefault()
-              setShow(!show)
+              generateToken()
             }}
-            children={show.np ? "Hide" : "Show"}
+            children={"Generate new"}
           />
         </div>
-        <Button
-          onClick={(e) => {
-            generateToken()
-          }}
-          children={"Generate new"}
-        />
       </form>
     </div>
   )
