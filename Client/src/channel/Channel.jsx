@@ -4,10 +4,12 @@ import { Header } from "../shared/header/Header"
 import VideoJS from "../player/Video.jsx"
 import css from "./Channel.module.css"
 import { userAPI } from "../API/userService"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
+import { VideoPlayer } from "../broatcast-item/VideoPlayer"
+import { Loader } from "../shared/loader/Loader"
 
 export const Channel = ({ variant }) => {
-  const { data, isLoading, error } = userAPI.useFetchCurrentUserQuery()
+  const { data, isSuccess } = userAPI.useFetchCurrentUserQuery()
   const [setTitle, {}] = userAPI.useSetTitleMutation()
   const [setDescription, { isSuccess: isSuccessDesc }] =
     userAPI.useSetDescriptionMutation()
@@ -16,7 +18,6 @@ export const Channel = ({ variant }) => {
   const [status, setStatus] = useState(false)
 
   useEffect(() => {
-    console.log(data)
     if (data) {
       setStreamTitle(data.stream_title)
       setStreamDescription(data.description)
@@ -24,35 +25,12 @@ export const Channel = ({ variant }) => {
     }
   }, [data])
 
-  const videoJsOptions = {
-    autoplay: false,
-    controls: true,
-    responsive: true,
-    fluid: true,
-    sources: [
-      {
-        src: `http://${location.hostname}:8080/hls/.m3u8`,
-        type: "application/x-mpegURL",
-      },
-    ],
-  }
-  const handlePlayerReady = (player) => {
-    playerRef.current = player
-
-    player.on("waiting", () => {
-      console.log("player is waiting")
-    })
-
-    player.on("dispose", () => {
-      console.log("player will dispose")
-    })
-  }
   return (
     <>
       <Header />
       <div className={css.container}>
         <div className={css.broadcastItem}>
-          <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+          {isSuccess ? <VideoPlayer login={data.username} /> : <Loader />}
         </div>
         <div className={css.info}>
           <div className={css.about}>
