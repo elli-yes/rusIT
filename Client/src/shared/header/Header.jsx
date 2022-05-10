@@ -27,7 +27,12 @@ export const Header = ({ searchQuerry, setSearchQuerry }) => {
 
       <Link to="/account">
         <Button
-          children={<i className="large material-icons">insert_chart</i>}
+          children={
+            <>
+              <i className="material-icons">account_circle</i>
+              <span> Account</span>
+            </>
+          }
         />
       </Link>
     </div>

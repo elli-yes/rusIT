@@ -12,12 +12,14 @@ export const userAPI = createApi({
       return headers
     },
   }),
-
+  tagTypes: ["User"],
+  keepUnusedDataFor: 0,
   endpoints: (build) => ({
     fetchCurrentUser: build.query({
       query: () => ({
         url: `/users/me`,
       }),
+      providesTags: ["User"],
     }),
     logout: build.mutation({
       query: () => ({
@@ -25,6 +27,7 @@ export const userAPI = createApi({
         method: "POST",
         credentials: "include",
       }),
+      invalidatesTags: ["User"],
     }),
     setTitle: build.mutation({
       query: (title) => ({
@@ -33,6 +36,7 @@ export const userAPI = createApi({
         body: title,
         credentials: "include",
       }),
+      invalidatesTags: ["User"],
     }),
     setDescription: build.mutation({
       query: (desc) => ({
@@ -41,6 +45,7 @@ export const userAPI = createApi({
         body: { description: desc },
         credentials: "include",
       }),
+      invalidatesTags: ["User"],
     }),
     generateToken: build.mutation({
       query: () => ({
@@ -48,13 +53,7 @@ export const userAPI = createApi({
         method: "POST",
         credentials: "include",
       }),
-    }),
-    generateToken: build.mutation({
-      query: () => ({
-        url: `/create_new_uuid`,
-        method: "POST",
-        credentials: "include",
-      }),
+      invalidatesTags: ["Post"],
     }),
   }),
 })

@@ -2,7 +2,6 @@ import { Button } from "../shared/button/Button"
 import css from "./Settings.module.css"
 import { useEffect } from "react"
 import { userAPI } from "../API/userService"
-import { authAPI } from "../API/authService"
 import { useDispatch } from "react-redux"
 import { setCredentials } from "../app/authSlice"
 
@@ -13,12 +12,13 @@ export const AccountInfo = () => {
     userAPI.useFetchCurrentUserQuery()
 
   const [logout, { data: auth, isSuccess: isExited }] =
-    authAPI.useLogoutMutation()
+    userAPI.useLogoutMutation()
 
   useEffect(() => {
     if (isExited) dispatch(setCredentials({ token: null }))
   }, [isExited])
-  console.log(data, isLoading, isSuccess)
+
+  console.log(data)
   return (
     <>
       <div className={css.container}>

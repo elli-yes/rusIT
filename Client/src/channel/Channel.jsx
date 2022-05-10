@@ -35,46 +35,51 @@ export const Channel = ({ variant }) => {
         </div>
         <div className={css.info}>
           <div className={css.about}>
-            <hr />
-            <span>Status:</span>
-            {status ? <span>Online</span> : <span>Offline</span>}
+            <label>Status:</label>
+            {status ? <h3>Online</h3> : <h3>Offline</h3>}
           </div>
           <div className={css.about}>
             <hr />
-            <span>Stream title:</span>
-            <span className={isSuccessTitle ? css.tip : css.none}>Saved</span>
-            <Input
-              placeholder={"Your stream title"}
-              value={streamTitle}
-              onChange={setStreamTitle}
-            />
-            <Button
-              children={"Save"}
-              onClick={() => {
-                setTitle({ stream_title: streamTitle })
-              }}
-            />
+            <div className={css.row}>
+              <label>Stream title:</label>
+              <span className={isSuccessTitle ? css.tip : css.none}>Saved</span>
+            </div>
+            <div className={css.row}>
+              <Input
+                placeholder={"Your stream title"}
+                value={streamTitle}
+                onChange={setStreamTitle}
+              />
+              <Button
+                children={"Save"}
+                onClick={() => {
+                  setTitle({ stream_title: streamTitle })
+                }}
+              />
+            </div>
           </div>
           <div className={css.about}>
             <hr />
-            <span>Channel description:</span>
-            <hr />
-            <span>Stream title:</span>
-            <span className={isSuccessDesc ? css.tip : css.none}>Saved</span>
+            <div className={css.row}>
+              <label>Channel description:</label>
+              <span className={isSuccessDesc ? css.tip : css.none}>Saved</span>
+            </div>
 
-            <textarea
-              value={streamDescription}
-              onChange={(e) => setStreamDescription(e.target.value)}
-              name="about"
-              cols="30"
-              rows="10"
-            ></textarea>
-            <Button
-              children={"Save"}
-              onClick={() => {
-                setDescription(streamDescription)
-              }}
-            />
+            <div className={css.row}>
+              <textarea
+                value={streamDescription}
+                onChange={(e) => setStreamDescription(e.target.value)}
+                name="about"
+                cols="30"
+                rows="10"
+              ></textarea>
+              <Button
+                children={"Save"}
+                onClick={() => {
+                  setDescription(streamDescription)
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

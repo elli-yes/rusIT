@@ -12,20 +12,12 @@ export const authAPI = createApi({
       return headers
     },
   }),
-
   endpoints: (build) => ({
     login: build.mutation({
       query: (acc) => ({
         url: `/login`,
         method: "POST",
         body: acc,
-        credentials: "include",
-      }),
-    }),
-    logout: build.mutation({
-      query: () => ({
-        url: `/logout`,
-        method: "POST",
         credentials: "include",
       }),
     }),

@@ -1,20 +1,33 @@
-/* .container span {
-  display: block;
-} */
 .container {
   display: grid;
   grid-template-columns: 2fr 1fr;
   padding: 20px;
 }
+/* LEFT */
 .broadcastItem {
-  border: solid 2px lightskyblue;
-  /* width: 50%; */
+  border: solid 2px cornflowerblue;
 }
+/* Right */
+.about hr {
+  height: 1px;
+  background-color: cornflowerblue;
+  border: none;
+}
+.about {
+  padding: 0px 10px 10px 10px;
+}
+textarea {
+  resize: none;
+  margin-right: 10px;
+}
+.row {
+  display: flex;
+  padding: 10px 0px;
+}
+
 .tip {
   background-color: teal;
   color: white;
-  border-radius: 15px;
-  padding: 5px 10px;
   font-size: large;
   animation: saved 2s;
   opacity: 0;
