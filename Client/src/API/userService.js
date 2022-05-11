@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react"
+import { ENVAPI } from "../../config"
 
 export const userAPI = createApi({
   reducerPath: "userAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8000/api",
+    baseUrl: `${ENVAPI}/api`,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token
       if (token) {
