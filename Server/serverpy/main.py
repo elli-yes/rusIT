@@ -32,7 +32,7 @@ origins = [
     "http://auth_server_py:8000",
     "http://localhost:8000",
     "http://0.0.0.0:8000",
-    "http://192.168.1.103:3000",
+    "http://77.223.96.53:3000",
 ]
 
 app.add_middleware(
