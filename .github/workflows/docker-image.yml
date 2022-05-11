@@ -28,7 +28,7 @@ jobs:
       with:
         context: ./Client
         push: true
-        tags: Client:latest
+        tags: egoraugust/client:latest
         
     - name: Log
       run: docker ps -a
