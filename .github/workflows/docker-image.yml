@@ -22,5 +22,13 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_LOGIN }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: ./Client
+        push: true
+        tags: Client:latest
+        
     - name: Log
       run: docker ps -a
