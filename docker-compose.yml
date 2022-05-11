@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  rtmp:
+    build: ./Server/rtmp
+    ports:
+      - "1935:1935"
+      - "8080:8080"
+    container_name: rtmp_server_py
+    volumes:
+      - ./Server/data:/tmp/hls
+
+  auth:
+    build: ./Server/serverpy
+    ports:
+      - "8000:8000"
+    container_name: auth_server_py
+    volumes:
+      - ./Server/serverpy/sql_app.db:/usr/src/app/sql_app.db
+
+  client:
+    build: ./Client
+    ports: 
+      - "3000:80"
+    container_name: client
