@@ -2,9 +2,10 @@ import React from "react"
 import videojs from "video.js"
 import "video.js/dist/video-js.css"
 import "./V.css"
+import { ENVSTREAM } from "../../config"
 
 export const VideoJS = (props) => {
-  const videoRef = React.useRef("http://localhost:8080/hls/artem.m3u8")
+  const videoRef = React.useRef(`${ENVSTREAM}/hls/artem.m3u8`)
   const playerRef = React.useRef(null)
   const { options, onReady } = props
 
