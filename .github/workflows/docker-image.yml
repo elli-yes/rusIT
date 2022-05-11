@@ -15,4 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build client
-      run: docker build ./Client --tag client-image:$(date +%s)
+      run: docker build ./Client --tag client-image:$(date +%s);
+    - name: Log
+      run: docker ps -a
