@@ -17,6 +17,6 @@ jobs:
     - name: Build client
       run: docker build ./Client --tag client-image:$(date +%s)
     - name: Login to docker
-      run: echo $docker_password | docker login -u $docker_login --password-stdin
+      run: echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin
     - name: Log
       run: docker ps -a
