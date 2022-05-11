@@ -47,7 +47,7 @@ export const Broadcasts = () => {
         {ssStreams.length > 0 ? (
           <Streams streams={ssStreams} />
         ) : (
-          <h1>No one streaming now, maybe you'l be a new stream Star?</h1>
+          <h1>No one streaming now, maybe you'll be a new stream Star?</h1>
         )}
       </div>
     </>
