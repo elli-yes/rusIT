@@ -48,9 +48,10 @@ jobs:
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
     steps:
       - name: ssh client
-      - run: eval $(ssh-agent -s)
-      - run: echo "$SECRET" | tr -d '\r' | ssh-add -
-      - run: mkdir -p ~/.ssh
-      - run: chmod 700 ~/.ssh
+        run: |
+         eval $(ssh-agent -s)
+         echo "$SECRET" | tr -d '\r' | ssh-add -
+         mkdir -p ~/.ssh
+         chmod 700 ~/.ssh
 #           ssh -o StrictHostKeyChecking=no root@77.223.96.53 "echo helo";
          
