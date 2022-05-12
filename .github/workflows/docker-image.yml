@@ -51,6 +51,5 @@ jobs:
           eval $(ssh-agent -s);
           echo ${{secrets.PRIVATE}} | tr -d '\r' | ssh-add -;
           mkdir -p ~/.ssh; chmod 700 ~/.ssh;
-          ssh -o StrictHostKeyChecking=no root@77.223.96.53 
-            "echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin;docker compose pull; docker compose up"
+          ssh -o StrictHostKeyChecking=no root@77.223.96.53 "ls";
          
