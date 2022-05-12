@@ -51,8 +51,8 @@ jobs:
         run: eval $(ssh-agent -s);
           sudo touch ./key; 
           sudo chmod 666 ./key; 
-          echo "$SECRET" | ./key; 
-          ssh-add ./key;
+          sudo echo "$SECRET" | ./key; 
+          sudo ssh-add ./key;
 #           mkdir -p ~/.ssh; chmod 700 ~/.ssh;
 #           ssh -o StrictHostKeyChecking=no root@77.223.96.53 "echo helo";
          
