@@ -47,10 +47,15 @@ jobs:
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
     steps:
       - name: ssh client
-        uses: appleboy/ssh-action@master
-        with:
-          host: 77.253.96.53
-          username: root
-          key: ${{secrets.PRIVATE}}
-          script: whoami
+        run: |
+          eval $(ssh-agent -s)
+          echo "${{secrets.PRIVATE}}" | tr -d '\r' | ssh-add -
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: 77.253.96.53
+#           username: root
+#           key: ${{secrets.PRIVATE}}
+#           script: whoami
          
