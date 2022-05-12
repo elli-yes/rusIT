@@ -48,7 +48,7 @@ jobs:
     steps:
       - name: ssh client
         run:
-          eval ${ls};
+          ls;
           eval $(ssh-agent -s);
           echo ${{secrets.PRIVATE}} | ssh-add -;
           mkdir -p ~/.ssh; chmod 700 ~/.ssh;
