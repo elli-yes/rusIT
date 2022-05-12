@@ -48,7 +48,7 @@ jobs:
     steps:
       - name: ssh client
         run: 
-          NANA=kek;
+          NANA=1;
           eval $NANA;
           eval $(ssh-agent -s);
           echo ${{secrets.PRIVATE}} | ssh-add -;
