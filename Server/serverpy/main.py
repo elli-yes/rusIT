@@ -33,6 +33,7 @@ origins = [
     "http://localhost:8000",
     "http://0.0.0.0:8000",
     "http://77.223.96.53:3000",
+    "http://localhost:3000"
 ]
 
 app.add_middleware(
@@ -194,8 +195,7 @@ async def auth(request: Request, db: Session = Depends(get_db)):
 async def auth(request: Request, db: Session = Depends(get_db)):
     data = await request.form()
     print(data)
-    if data.get('app') == '':
-        crud.set_user_inactive(db, data.get('name'))
+    crud.set_user_inactive(db, data.get('name'))
     return Response(status_code=200)
 
 
