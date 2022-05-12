@@ -50,7 +50,7 @@ jobs:
       - name: ssh client
         run: eval $(ssh-agent -s);
           sudo touch ./key; 
-          chmod 666 ./key; 
+          sudo chmod 666 ./key; 
           echo "$SECRET" | ./key; 
           ssh-add ./key;
 #           mkdir -p ~/.ssh; chmod 700 ~/.ssh;
