@@ -63,6 +63,16 @@ def set_user_inactive(db: Session, username: str):
     return user
 
 
+def set_user_active(db: Session, username: str):
+    user = db.query(models.User).filter(
+        models.User.username == username).first()
+    user.stream_title = ""
+    user.is_active = 1
+    db.add(user)
+    db.commit()
+    return user
+
+
 def get_all_active_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.User).filter(models.User.is_active == 1).offset(skip).limit(limit).all()
 

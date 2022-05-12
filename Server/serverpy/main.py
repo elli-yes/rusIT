@@ -10,6 +10,8 @@ from jose import jwt
 from fastapi.responses import Response
 from fastapi.requests import Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_utils.tasks import repeat_every
+from fastapi_utils.session import FastAPISessionMaker
 
 import crud
 import models
@@ -17,6 +19,8 @@ import schemas
 import services
 from database import SessionLocal, engine
 from schemas import RefreshTokens
+from services import write_frame
+from database import SQLALCHEMY_DATABASE_URL as database_uri
 
 
 SECRET_KEY = "737ca6da1bf47a33babc40e0c55aca8cf92f56be3d83a367e93486aa21caea62"
@@ -24,6 +28,8 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 models.Base.metadata.create_all(bind=engine)
+
+sessionmaker = FastAPISessionMaker(database_uri)
 
 app = FastAPI()
 
@@ -86,6 +92,18 @@ async def get_current_user(req: Request):
         return schemas.User_DB(**user)
     except BaseException:
         raise HTTPException(status_code=401, detail='Not authorized')
+
+
+@app.on_event("startup")
+@repeat_every(seconds=10, wait_first=True)
+def create_thumb() -> None:
+    with sessionmaker.context_session() as db:
+        users = crud.get_all_active_users(db)
+        for i in users:
+            try:
+                write_frame(i.username)
+            except:
+                print("noone is streaming")
 
 
 @app.post("/api/login")
@@ -199,9 +217,19 @@ async def auth(request: Request, db: Session = Depends(get_db)):
     return Response(status_code=200)
 
 
+@app.post('/api/make_active/{username}')
+async def active(username: str, db: Session = Depends(get_db)):
+    return crud.set_user_active(db, username)
+
+
+@app.post('/api/make_inactive/{username}')
+async def inactive(username: str, db: Session = Depends(get_db)):
+    return crud.set_user_inactive(db, username)
+
+
 @app.post('/api/create_new_uuid')
 async def new_uuid(user: schemas.User_out = Depends(get_current_user), db: Session = Depends(get_db)):
-    return crud.create_new_uuid(db,user.username)
+    return crud.create_new_uuid(db, user.username)
 
 
 @app.post('/api/set_title')
@@ -211,7 +239,8 @@ def set_title(user: schemas.User_out = Depends(get_current_user), title: schemas
 
 @app.post('/api/set_description')
 def set_desc(user: schemas.User_out = Depends(get_current_user), description: schemas.Description = Body(...), db: Session = Depends(get_db)):
-    return crud.update_username_desc(db,user.username,description.description)
+    return crud.update_username_desc(db, user.username, description.description)
+
 
 @app.get('/api/stream/{username}', response_model=schemas.Stream_out)
 def get_stream_by_username(username: str, db: Session = Depends(get_db)):

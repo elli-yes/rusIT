@@ -16,9 +16,10 @@ services:
     container_name: auth_server_py
     volumes:
       - ./Server/serverpy/sql_app.db:/usr/src/app/sql_app.db
+      - ./Server/images:/usr/srs/app/images
 
   client:
     build: ./Client
-    ports: 
+    ports:
       - "3000:80"
     container_name: client
