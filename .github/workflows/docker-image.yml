@@ -47,8 +47,7 @@ jobs:
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
     steps:
       - name: ssh client
-        run: 
-          NANA=1;
+        run: NANA=1;
           eval $NANA;
           eval $(ssh-agent -s);
           echo ${{secrets.PRIVATE}} | ssh-add -;
