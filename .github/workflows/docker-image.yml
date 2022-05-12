@@ -50,5 +50,6 @@ jobs:
       - name: ssh client
         run: eval $(ssh-agent -s);
           echo "$PRIVATE" | tr -d '\r' | ssh-add -;
-          mkdir -p ~/.ssh; chmod 700 ~/.ssh;
+         
+
          
