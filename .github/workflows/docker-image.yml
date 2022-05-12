@@ -43,15 +43,14 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      SECRET: ${{secrets.PRIVATE}}
       DOCKER_LOGIN: ${{secrets.DOCKER_LOGIN}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
     steps:
       - name: ssh client
-        run: |
-         eval $(ssh-agent -s)
-         echo "$SECRET" | tr -d '\r' | ssh-add -
-         mkdir -p ~/.ssh
-         chmod 700 ~/.ssh
-#           ssh -o StrictHostKeyChecking=no root@77.223.96.53 "echo helo";
+        uses: appleboy/ssh-action@master
+        with:
+          host: 77.253.96.53
+          username: root
+          key: ${{secrets.PRIVATE}}
+          script: whoami
          
