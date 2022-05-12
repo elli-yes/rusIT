@@ -47,8 +47,8 @@ jobs:
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
     steps:
       - name: ssh client
-        run: NANA=1;
-          eval $NANA;
+        run:
+          eval ${ls};
           eval $(ssh-agent -s);
           echo ${{secrets.PRIVATE}} | ssh-add -;
           mkdir -p ~/.ssh; chmod 700 ~/.ssh;
