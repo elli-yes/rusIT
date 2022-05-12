@@ -7,38 +7,38 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+#     steps:
+#       - uses: actions/checkout@v3
 
-      - name: Login to docker
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_LOGIN }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+#       - name: Login to docker
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKER_LOGIN }}
+#           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push client
-        uses: docker/build-push-action@v3
-        with:
-          context: ./Client
-          push: true
-          tags: egoraugust/rusi4:client
+#       - name: Build and push client
+#         uses: docker/build-push-action@v3
+#         with:
+#           context: ./Client
+#           push: true
+#           tags: egoraugust/rusi4:client
 
-      - name: Build and push rtmp server
-        uses: docker/build-push-action@v3
-        with:
-          context: ./Server/rtmp
-          push: true
-          tags: egoraugust/rusi4:rtmp
+#       - name: Build and push rtmp server
+#         uses: docker/build-push-action@v3
+#         with:
+#           context: ./Server/rtmp
+#           push: true
+#           tags: egoraugust/rusi4:rtmp
 
-      - name: Build and push API server
-        uses: docker/build-push-action@v3
-        with:
-          context: ./Server/serverpy
-          push: true
-          tags: egoraugust/rusi4:api
+#       - name: Build and push API server
+#         uses: docker/build-push-action@v3
+#         with:
+#           context: ./Server/serverpy
+#           push: true
+#           tags: egoraugust/rusi4:api
   deploy:
     runs-on: ubuntu-latest
     
