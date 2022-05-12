@@ -16,7 +16,7 @@ services:
     container_name: auth_server_py
     volumes:
       - ./Server/serverpy/sql_app.db:/usr/src/app/sql_app.db
-      - ./Server/images:/usr/srs/app/images
+      - ./Server/images:/usr/src/app/images
 
   client:
     build: ./Client

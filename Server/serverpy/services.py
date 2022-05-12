@@ -29,7 +29,7 @@ def authenticate_user(db: Session, username: str, password: str):
 
 
 def write_frame(name: str):
-    VIDEO_URL = f"/Users/artem/Projects/start_up/Rusich/rusIT/Server/data/{name}.m3u8"
+    VIDEO_URL = f"http://77.223.96.53:8080/hls/{name}.m3u8"
 
     cap = cv2.VideoCapture(VIDEO_URL)
     if (cap.isOpened() == False):

@@ -102,6 +102,7 @@ def create_thumb() -> None:
         for i in users:
             try:
                 write_frame(i.username)
+                print(f"{i.username} was wrote")
             except:
                 print("noone is streaming")
 
