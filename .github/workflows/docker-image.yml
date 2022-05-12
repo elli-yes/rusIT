@@ -49,7 +49,7 @@ jobs:
       - name: ssh client
         run: 
           eval $(ssh-agent -s);
-          echo ${{secrets.PRIVATE}} | tr -d '\r' | ssh-add -;
+          echo ${{secrets.PRIVATE}} | ssh-add -;
           mkdir -p ~/.ssh; chmod 700 ~/.ssh;
           ssh -o StrictHostKeyChecking=no root@77.223.96.53 "echo helo";
          
