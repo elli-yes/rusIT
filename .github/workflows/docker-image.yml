@@ -52,7 +52,7 @@ jobs:
           echo "${{secrets.PRIVATE}}" | tr -d '\r' | ssh-add -
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          ssh -o StrictHostKeyChecking=no root@77.223.96.53 "echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin; docker compose pull; docker compose -d up; exit"
+          ssh -o StrictHostKeyChecking=no root@77.223.96.53 "echo $DOCKER_PASSWORD | docker login -u $DOCKER_LOGIN --password-stdin; docker compose pull; docker compose up -d; exit"
 #         uses: appleboy/ssh-action@master
 #         with:
 #           host: 77.223.96.53
