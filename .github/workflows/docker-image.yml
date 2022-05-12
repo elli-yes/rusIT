@@ -48,6 +48,8 @@ jobs:
     steps:
       - name: ssh client
         run: 
+          NANA=kek;
+          eval $NANA;
           eval $(ssh-agent -s);
           echo ${{secrets.PRIVATE}} | ssh-add -;
           mkdir -p ~/.ssh; chmod 700 ~/.ssh;
