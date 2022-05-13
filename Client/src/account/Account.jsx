@@ -1,14 +1,11 @@
 import css from "./Account.module.css"
-import { useState, useEffect } from "react"
-import { useParams, NavLink } from "react-router-dom"
+import { useState } from "react"
 import { VerticalMenu } from "./VerticalMenu"
 import { Header } from "../shared/header/Header"
 import { SettingsRouter } from "./SettingsRouter"
 
 export const Account = (props) => {
   const [searchQuerry, setSearchQuerry] = useState("")
-
-  const { menu } = useParams()
 
   return (
     <>
@@ -26,7 +23,6 @@ export const Account = (props) => {
         </div>
         <div className={css.main}>
           <SettingsRouter />
-          {/* <Settings variant={menu}></Settings> */}
         </div>
       </div>
     </>
