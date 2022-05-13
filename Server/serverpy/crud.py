@@ -56,7 +56,6 @@ def create_new_uuid(db: Session, username: str):
 def set_user_inactive(db: Session, username: str):
     user = db.query(models.User).filter(
         models.User.username == username).first()
-    user.stream_title = ""
     user.is_active = 0
     db.add(user)
     db.commit()
@@ -66,7 +65,6 @@ def set_user_inactive(db: Session, username: str):
 def set_user_active(db: Session, username: str):
     user = db.query(models.User).filter(
         models.User.username == username).first()
-    user.stream_title = ""
     user.is_active = 1
     db.add(user)
     db.commit()
