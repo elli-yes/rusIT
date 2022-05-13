@@ -9,10 +9,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
       - uses: actions/checkout@v3
-
+      
+#       - name: Cache node_modules
+#         uses: actions/cache@v3
+#         env:
+#           cache-name: cache-node_modules
+#         with:
+#           path: ./Client/node_modules
+#           key: ${{ runner.os }}-build-${{ env.cache-name }}
+          
+#       - name: Cache python
+#         uses: actions/cache@v3
+#         env:
+#           cache-name: cache-python
+#         with:
+#           path: ./Client/node_modules
+#           key: ${{ runner.os }}-build-${{ env.cache-name }}
+          
+          
       - name: Login to docker
         uses: docker/login-action@v2
         with:
@@ -32,6 +49,8 @@ jobs:
           context: ./Server/rtmp
           push: true
           tags: egoraugust/rusi4:rtmp
+          cache-from: type=registry,ref=egoraugust/rusi4:rtmpbuildcache
+          cache-to: type=registry,ref=egoraugust/rusi4:rtmpbuildcache,mode=max
 
       - name: Build and push API server
         uses: docker/build-push-action@v3
