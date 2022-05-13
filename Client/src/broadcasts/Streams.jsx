@@ -1,5 +1,5 @@
 import { PlayerBox } from "./PlayerBox"
-import defImg from "../shared/assets/thumb.png"
+import { ENVAPI } from "../../config"
 
 export const Streams = ({ streams }) => {
   return (
@@ -11,7 +11,7 @@ export const Streams = ({ streams }) => {
             login={stream.username}
             title={stream.stream_title}
             status={1}
-            thumb={defImg}
+            thumb={`${ENVAPI}/api/images/${stream.username}.jpg`}
           />
         )
       })}
