@@ -12,6 +12,8 @@ from fastapi.requests import Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_utils.tasks import repeat_every
 from fastapi_utils.session import FastAPISessionMaker
+from fastapi.staticfiles import StaticFiles
+
 
 import crud
 import models
@@ -49,6 +51,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/api/images", StaticFiles(directory="images"), name="images")
 
 # Dependency
 
