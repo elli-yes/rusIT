@@ -217,8 +217,8 @@ async def auth(request: Request, db: Session = Depends(get_db)):
 @app.post('/api/done')
 async def auth(request: Request, db: Session = Depends(get_db)):
     data = await request.form()
-    print(data)
     crud.set_user_inactive(db, data.get('name'))
+    services.delete_image(data.get('name'))
     return Response(status_code=200)
 
 

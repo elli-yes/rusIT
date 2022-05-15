@@ -1,3 +1,4 @@
+import os
 import sys
 import cv2
 import asyncio
@@ -49,3 +50,11 @@ def write_frame(name: str):
     cv2.imwrite(f'images/{name}.jpg', frame)
     cap.release()
     cv2.destroyAllWindows()
+
+
+def delete_image(username):
+    path = f'images/{username}.jpg'
+    if os.path.isfile(path):
+        os.remove(path)
+    else:
+        print(f"File {path} not found")
