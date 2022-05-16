@@ -1,11 +1,11 @@
-import css from "./Account.module.css"
-import { useState } from "react"
-import { VerticalMenu } from "./VerticalMenu"
-import { Header } from "../shared/header/Header"
-import { SettingsRouter } from "./SettingsRouter"
+import css from "./Account.module.css";
+import { useState } from "react";
+import { VerticalMenu } from "./VerticalMenu";
+import { Header } from "../shared/header/Header";
+import { SettingsRouter } from "./SettingsRouter";
 
 export const Account = (props) => {
-  const [searchQuerry, setSearchQuerry] = useState("")
+  const [searchQuerry, setSearchQuerry] = useState("");
 
   return (
     <>
@@ -26,5 +26,5 @@ export const Account = (props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
