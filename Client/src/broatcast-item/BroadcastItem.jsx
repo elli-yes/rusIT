@@ -8,11 +8,18 @@ import { Loader } from "../shared/loader/Loader"
 //API
 import { useParams } from "react-router-dom"
 import { streamsAPI } from "../API/streamsService"
+import { userAPI } from "../API/userService"
 
 export const BroadcastItem = () => {
   const { login } = useParams()
 
   const { data, isLoading, error } = streamsAPI.useFetchStreamItemQuery(login)
+  const {
+    data: user,
+    isLoading: l,
+    isSuccess,
+    fulfilledTimeStamp,
+  } = userAPI.useFetchCurrentUserQuery()
 
   return (
     <>
@@ -27,7 +34,7 @@ export const BroadcastItem = () => {
               <VideoPlayer login={login} />
               <Info data={data} />
             </div>
-            {/* <Chat /> */}
+            {!l ? <Chat user={user.username} room_id={login} /> : <Loader />}
           </>
         ) : (
           <></>

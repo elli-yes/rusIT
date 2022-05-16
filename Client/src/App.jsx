@@ -1,12 +1,13 @@
 import "./App.css"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { MainRouter } from "./router/MainRouter"
 import { authAPI } from "./API/authService"
 import { useDispatch } from "react-redux"
 import { setCredentials } from "./app/authSlice"
 
 const App = () => {
-  const [refresh, { data, isLoading, isSuccess }] = authAPI.useRefreshMutation()
+  const [refresh, { data, isLoading, isSuccess, isError, fulfilledTimeStamp }] =
+    authAPI.useRefreshMutation()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -19,13 +20,14 @@ const App = () => {
     }
   }, [isSuccess])
 
-  if (isLoading) return null
-  else
-    return (
-      <div className="App">
-        <MainRouter />
-      </div>
-    )
+  if (isLoading) {
+    return null
+  }
+  return (
+    <div className="App">
+      <MainRouter />
+    </div>
+  )
 }
 
 export default App
