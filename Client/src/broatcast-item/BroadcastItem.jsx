@@ -14,6 +14,7 @@ export const BroadcastItem = () => {
   const { login } = useParams()
 
   const { data, isLoading, error } = streamsAPI.useFetchStreamItemQuery(login)
+
   const {
     data: user,
     isLoading: l,
@@ -34,7 +35,11 @@ export const BroadcastItem = () => {
               <VideoPlayer login={login} />
               <Info data={data} />
             </div>
-            {!l ? <Chat user={user.username} room_id={login} /> : <Loader />}
+            {user && !l ? (
+              <Chat user={user.username} room_id={login} />
+            ) : (
+              <Chat user={null} room_id={login} />
+            )}
           </>
         ) : (
           <></>
