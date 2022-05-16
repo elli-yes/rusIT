@@ -1,2 +1,6 @@
-VITE_API=http://77.223.96.53:8000
-VITE_STREAM=http://77.223.96.53:8080
+
+rtmp://77.223.96.53:1935/live
+egor?key=22c6fc58-bf90-4ec9-aac5-c5d4c398757a
+
+VITE_API=http://localhost:8000
+VITE_STREAM=http://localhost:8080
