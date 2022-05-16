@@ -2,35 +2,30 @@ import css from "./BroadcastItem.module.css"
 import { Input } from "../shared/Input/Input.jsx"
 import { Button } from "../shared/button/Button.jsx"
 import { useEffect, useState } from "react"
-export const Chat = () => {
+import { ENVAPI } from "../../config"
+
+export const Chat = ({ user, room_id }) => {
   const [messages, setMessages] = useState([])
   const [mvalue, setMvalue] = useState("")
-  const [ws, setWs] = useState()
-
-  function connect(boo) {
-    if (boo) {
-      ws.close()
-    }
-    let sk = new WebSocket(`ws://${location.hostname}:8000/ws/${Date.now()}`)
-    sk.onopen = function (event) {
-      sk.onmessage = function (event) {
-        console.log("LOG", event.data)
-        setMessages((messages) => [...messages, event.data])
-      }
-    }
-    setWs(sk)
-  }
-
+  const [client_id, setCl] = useState(user)
+  console.log(user)
   useEffect(() => {
-    connect()
-  }, [])
-
+    if (client_id === null) setCl(Date.now())
+  }, [client_id])
+  console.log(`${ENVAPI.replace("http", "ws")}/ws/${room_id}/${client_id}`)
+  const ws = new WebSocket(
+    `${ENVAPI.replace("http", "ws")}/ws/${room_id}/${client_id}`
+  )
+  ws.onmessage = function (event) {
+    console.log(event)
+    setMessages((messages) => [...messages, event.data])
+  }
   function sendMessage(event) {
     ws.send(mvalue)
     setMvalue("")
     event.preventDefault()
   }
-  // console.log(ws)
+
   return (
     <div className={css.cht}>
       <div className={css.chat}>Rusich chat</div>
@@ -44,8 +39,19 @@ export const Chat = () => {
         })}
       </div>
       <div className={css.newmessage}>
-        <Input value={mvalue} onChange={setMvalue} placeholder={"Message..."} />
-        <Button onClick={sendMessage} children="Send" />
+        {user ? (
+          <>
+            <Input
+              disabled={user ? false : true}
+              value={mvalue}
+              onChange={setMvalue}
+              placeholder={"Message..."}
+            />
+            <Button onClick={sendMessage} children="Send" />
+          </>
+        ) : (
+          <span>Please signin</span>
+        )}
       </div>
     </div>
   )
