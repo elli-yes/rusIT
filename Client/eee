@@ -4,5 +4,7 @@ egor?key=22c6fc58-bf90-4ec9-aac5-c5d4c398757a
 
 rtmp://localhost:1935/live
 egor?key=d1586731-ef95-4e53-bb13-a4283927407a
+
 VITE_API=http://localhost:8000
 VITE_STREAM=http://localhost:8080
+

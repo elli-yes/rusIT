@@ -24,3 +24,8 @@
   transform: rotate(-45deg);
   background-color: black;
 }
+@media (max-width: 900px) {
+  .container {
+    display: none;
+  }
+}

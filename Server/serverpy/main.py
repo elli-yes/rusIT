@@ -54,6 +54,25 @@ app.add_middleware(
 
 app.mount("/api/images", StaticFiles(directory="images"), name="images")
 
+managers={}
+
+
+class ConnectionManager:
+    def __init__(self, room_id):
+        self.room_id = room_id
+        self.active_connections: List[WebSocket] = []
+
+    async def connect(self, websocket: WebSocket):
+        await websocket.accept()
+        self.active_connections.append(websocket)
+
+    def disconnect(self, websocket: WebSocket):
+        self.active_connections.remove(websocket)
+
+    async def broadcast(self, data: str, websocket: WebSocket):
+        for connection in self.active_connections:
+             await connection.send_text(data)
+
 # Dependency
 
 
@@ -210,6 +229,7 @@ async def auth(request: Request, db: Session = Depends(get_db)):
     name = data.get('name')
     key = data.get('key')
     if crud.check_auth(db, name, key):
+        managers[name] = ConnectionManager(name)
         return Response(status_code=200)
     return Response(status_code=403)
 
@@ -261,37 +281,17 @@ def get_all_active_users(db: Session = Depends(get_db)):
     return users
 
 
-class ConnectionManager:
-    def __init__(self):
-        self.active_connections: List[WebSocket] = []
-
-    async def connect(self, websocket: WebSocket, room:str, id:str):
-        await websocket.accept()
-        self.active_connections.append({"websocket": websocket, "room":room, "id": id})
-
-    def disconnect(self, websocket: WebSocket, room:str, id:str):
-        self.active_connections.remove({"websocket": websocket, "room":room, "id": id})
-
-    async def send_personal_message(self, message: str, websocket: WebSocket):
-        await websocket.send_text(message)
-
-    async def broadcast(self, data: str, room: str, id: str):
-        for connection in self.active_connections:
-          if room == connection["room"]:
-            if id != connection["id"]:
-             await connection["websocket"].send_text(data)
 
 
-manager = ConnectionManager()
 
-@app.websocket("/ws/{room_id}/{client_id}")
-async def websocket_endpoint(websocket: WebSocket, room_id:str, client_id: str):
-    await manager.connect(websocket, room_id, client_id)
+@app.websocket("/ws/{room_id}")#/{client_id}
+async def websocket_endpoint(websocket: WebSocket, room_id:str):#, client_id: str
+    manager = managers[room_id]
+    await manager.connect(websocket)#, client_id
     try:
         while True:
             data = await websocket.receive_text()
-            await manager.send_personal_message(f"You : {data}", websocket)
-            await manager.broadcast(f"#{ client_id} says: {data}", room_id, client_id)
+            await manager.broadcast(data, websocket)#, client_id
     except WebSocketDisconnect:
-        manager.disconnect(websocket, room_id, client_id)
-        await manager.broadcast(f"#{ client_id} left chat",room_id, client_id )
+        manager.disconnect(websocket)#, client_id
+        # await manager.broadcast(f"#{ client_id} left chat",room_id )#, client_id

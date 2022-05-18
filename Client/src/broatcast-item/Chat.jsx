@@ -9,22 +9,24 @@ export const Chat = ({ user, room_id }) => {
   const [mvalue, setMvalue] = useState("")
   const [client_id, setCl] = useState(user)
 
+  const [ws, setWs] = useState()
+
   useEffect(() => {
-    if (client_id === null) setCl(Date.now())
+    // if (client_id === null) setCl(Date.now())
+    const ws = new WebSocket(
+      `${ENVAPI.replace("http", "ws")}/ws/${room_id}` ///${client_id}
+    )
+    ws.onmessage = function (event) {
+      setMessages((messages) => [...messages, JSON.parse(event.data)])
+    }
+
+    setWs(ws)
   }, [client_id])
 
-  const ws = new WebSocket(
-    `${ENVAPI.replace("http", "ws")}/ws/${room_id}/${client_id}`
-  )
-
-  ws.onmessage = function (event) {
-    setMessages((messages) => [...messages, event.data])
-  }
-
   function sendMessage(event) {
-    ws.send(mvalue)
-    setMvalue("")
     event.preventDefault()
+    ws.send(JSON.stringify({ username: client_id, text: mvalue }))
+    setMvalue("")
   }
 
   return (
@@ -34,7 +36,7 @@ export const Chat = ({ user, room_id }) => {
         {messages.map((m, i) => {
           return (
             <div className={css.mssg} key={i}>
-              {m}
+              {m.username}: {m.text}
             </div>
           )
         })}
