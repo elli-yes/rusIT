@@ -1,6 +1,6 @@
-@media (min-width: 320px) {
+@media (min-width: 420px) {
   .playerbox {
-    border: 2px solid fuchsia;
+    border: 2px solid cornflowerblue;
     height: 180px;
     /* width: 80vw; */
     margin-bottom: 5px;
@@ -11,7 +11,7 @@
 }
 @media (min-width: 768px) {
   .playerbox {
-    border: 3px solid red;
+    border: 3px solid cornflowerblue;
     height: 200px;
     margin-bottom: 5px;
     display: flex;
@@ -20,7 +20,7 @@
 }
 @media (min-width: 1440px) {
   .playerbox {
-    border: 3px solid green;
+    border: 3px solid cornflowerblue;
     height: 200px;
     margin-bottom: 5px;
     display: flex;
