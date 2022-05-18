@@ -1,9 +1,10 @@
 import { PlayerBox } from "./PlayerBox"
 import { ENVAPI } from "../../config"
+import css from "./Broadcasts.module.css"
 
 export const Streams = ({ streams }) => {
   return (
-    <>
+    <div className={css.cont}>
       {streams.map((stream, i) => {
         return (
           <PlayerBox
@@ -15,6 +16,6 @@ export const Streams = ({ streams }) => {
           />
         )
       })}
-    </>
+    </div>
   )
 }

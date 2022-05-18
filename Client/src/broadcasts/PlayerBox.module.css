@@ -1,21 +1,36 @@
-.playerbox {
-  border: 3px solid lightblue;
-  height: 200px;
-  margin-bottom: 5px;
-  display: flex;
-  /* justify-content: center; */
-}
-@media (max-width: 900px) {
+@media (min-width: 320px) {
   .playerbox {
-    border: 2px solid lightblue;
+    border: 2px solid fuchsia;
     height: 180px;
-    width: 80vw;
+    /* width: 80vw; */
+    margin-bottom: 5px;
+    display: flex;
+    position: relative;
+    /* justify-content: center; */
+  }
+}
+@media (min-width: 768px) {
+  .playerbox {
+    border: 3px solid red;
+    height: 200px;
+    margin-bottom: 5px;
+    display: flex;
+    /* justify-content: center; */
+  }
+}
+@media (min-width: 1440px) {
+  .playerbox {
+    border: 3px solid green;
+    height: 200px;
     margin-bottom: 5px;
     display: flex;
     /* justify-content: center; */
   }
 }
 .playerbox img {
+  width: 100%;
+}
+.playerbox object {
   width: 100%;
 }
 .playerboxTitle {
