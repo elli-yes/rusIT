@@ -1,9 +1,9 @@
 ![RusichTv](https://github.com/elli-yes/rusIT/blob/main/Client/src/favicon.png)
-# RusichTv  http://77.223.96.53:3000/  
+# RusichTv   
 Русич это онлайн стриминговый сервис, созданный как отечественная альтернатива twitch. 
-
+## Work table
 ![Our_Plan](https://github.com/elli-yes/rusIT/blob/main/Client/src/shared/assets/Снимок%20экрана%202022-05-19%20в%2011.14.18.png)
-## Server layer kluev96@box.com
+## Server layer
 >Серверная часть состоит из двух слоев: API и RTMP.  
 
 >RTMP (Real Time Messaging Protocol) используется как основное средство передачи потока с устройства пользователя на сервер. В качестве rtmp сервера был испорльзован nginx/rtmp-server. Он развернут в докер контейнере и выполняет функции приема сигнала, превращения потока в hls плейлист, а также получение потока на клиенте.
@@ -23,7 +23,7 @@
 >API сервер осущетсвляет свзь клиента, БД и RTMP сервера
 
 
-## Client layer tru.elli.yes@box.com  achrameshinas@box.com
+## Client layer
 
 >Клиентская часть напсина с помощью библиотек React, Redux tool kit, RTKQuerry.
 >Клиент состоит из нескольких страниц:
@@ -33,7 +33,7 @@
 >- Канал 
 
 
-## DevOps achrameshinas@box.com
+## DevOps
 
 >В качестве DevOps инструмента использованы Github action и Docker hub. Воркфлоу выглядит следующим образом:  
 >- Push/merge в main ветку
