@@ -2,7 +2,7 @@
 # RusichTv  http://77.223.96.53:3000/  
 Русич это онлайн стриминговый сервис, созданный как отечественная альтернатива twitch. 
 
-
+![Our_Plan](https://github.com/elli-yes/rusIT/blob/main/Client/src/shared/assets/Снимок%20экрана%202022-05-19%20в%2011.14.18.png)
 ## Server layer kluev96@box.com
 >Серверная часть состоит из двух слоев: API и RTMP.  
 
