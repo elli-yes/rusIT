@@ -1,6 +1,6 @@
 ![RusichTv](https://github.com/elli-yes/rusIT/blob/main/Client/src/favicon.png)
 # RusichTv   
-Русич это онлайн стриминговый сервис, созданный как отечественная альтернатива twitch. 
+Русич это онлайн стриминговый сервис. 
 ## Work table
 ![Our_Plan](https://github.com/elli-yes/rusIT/blob/main/Client/src/shared/assets/Снимок%20экрана%202022-05-19%20в%2011.14.18.png)
 ## Server layer
